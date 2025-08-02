@@ -14,6 +14,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Section from '@/components/Section';
 
 export default function GiftReady() {
   /* ---------------------------------------------------------------- */
@@ -54,6 +55,7 @@ export default function GiftReady() {
 
   return (
     <>
+      <Section>
       {/* gradient backdrop inside layout (nav + footer already there) */}
       <Container
         maxWidth="md"
@@ -165,6 +167,7 @@ export default function GiftReady() {
           Copied!
         </Alert>
       </Snackbar>
+      </Section>
     </>
   );
 }
