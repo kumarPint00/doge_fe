@@ -1,5 +1,5 @@
 const KEY   = process.env.NEXT_PUBLIC_ALCHEMY_KEY!;
-const CHAIN = 'ethereum';             // or 'polygon'
+const CHAIN = 'ethereum';        
 
 export async function getWalletNfts(address: string) {
   const url =

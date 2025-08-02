@@ -18,7 +18,7 @@ export default function Section({
           'radial-gradient(circle at 0 20%, #fde7c3 0%, rgba(253,231,195,0) 60%), ' +
           'radial-gradient(circle at 100% 80%, #ffd6e8 0%, rgba(255,214,232,0) 55%)',
         py: { xs: 6, md: 8 },
-        ...sx, // allow override
+        ...sx,
       }}
     >
       {children}

@@ -6,7 +6,7 @@ export default function HeroV2() {
   return (
     <Section
       sx={{
-        // same peach-to-white bg wash as the mock
+     
         background:
           'radial-gradient(circle at 0% 0%, #f9dfb6 0%, rgba(249,223,182,0) 45%), #fff7fb',
         py: { xs: 10, md: 14 },
@@ -36,7 +36,7 @@ export default function HeroV2() {
 
           <Grid item xs={12} md={6} textAlign="center">
             <Image
-              src="/doge-hero.png"      // transparent PNG 420×420
+              src="/doge-hero.png"     
               alt="doge in gift box"
               width={420}
               height={420}

@@ -8,7 +8,7 @@ import {
   Snackbar,
   Alert,
 } from '@mui/material';
-import BoltIcon from '@mui/icons-material/Bolt'; // just for the bell / ping
+import BoltIcon from '@mui/icons-material/Bolt'; 
 import { useState } from 'react';
 import Image from 'next/image';
 import Section from '@/components/Section';

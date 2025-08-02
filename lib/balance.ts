@@ -1,6 +1,5 @@
 import { ethers, Contract } from 'ethers';
-import erc20Abi from './erc20Abi.json';           // 3-line minimal ABI
-
+import erc20Abi from './erc20Abi.json';         
 export async function getEthBalance(
   provider: ethers.BrowserProvider,
   address: string

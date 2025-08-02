@@ -21,17 +21,17 @@ const CARDS: Card[] = [
   {
     title: 'Create a Gift Pack',
     body: 'Add tokens, NFTs, or both — whatever kindness looks like to you.',
-    img: '/heart-hand.png',      // 200 × 200 PNG
+    img: '/heart-hand.png',      
   },
   {
     title: 'Generate a Secret Code',
     body: 'Lock your gift with a unique code. The pack goes into escrow until someone claims it with the code.',
-    img: '/lock.png',            // 200 × 200 PNG
+    img: '/lock.png',            
   },
   {
     title: 'Share & Surprise',
     body: 'Send the secret code to a friend, loved one, or stranger. Only they can unlock the pack and claim your gift.',
-    img: '/giftbox.png',         // 200 × 200 PNG
+    img: '/giftbox.png',         
   },
 ];
 
@@ -42,7 +42,7 @@ export default function HowItWorksV2() {
     <Section
       id="how"
       sx={{
-        bgcolor: '#E1EFFF',                     // light blue background
+        bgcolor: '#E1EFFF',                     
         py: { xs: 8, md: 10 },
       }}
     >
@@ -71,7 +71,7 @@ export default function HowItWorksV2() {
                   key={c.title}
                   item
                   xs={12}
-                  md={idx < 2 ? 6 : 12}      // top-row cards split, last card spans full width
+                  md={idx < 2 ? 6 : 12}      
                 >
                   <Paper
                     sx={{

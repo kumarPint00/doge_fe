@@ -11,7 +11,7 @@ import {
 import { GiftItem } from '@/types/gift';
 
 interface Props {
-  items: GiftItem[];        // whatever’s in EscrowContext
+  items: GiftItem[];       
   message: string;
   secretCode: string;
   onConfirm: () => void;

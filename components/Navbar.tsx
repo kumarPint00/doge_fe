@@ -35,13 +35,13 @@ export default function NavbarV2() {
   /* Connect handler                                                    */
   /* ------------------------------------------------------------------ */
   const handleConnect = async () => {
-    if (addr || busy) return; // already connected / busy
+    if (addr || busy) return; 
     setBusy(true);
 
     try {
       const { address, provider } = await connectWallet();
       setAddr(formatAddress(address));
-      // propagate to global context for downstream hooks
+      
       dispatch?.({ type: 'setProvider', provider } as any);
     } catch (e: any) {
       setErr(e.message ?? 'Wallet connection failed');

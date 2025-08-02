@@ -10,7 +10,7 @@ import {
   Box,
 } from '@mui/material';
 import { useState } from 'react';
-import { claimPack } from '@/lib/escrow';          // your mock or real API
+import { claimPack } from '@/lib/escrow';      
 import Image from 'next/image';
 import Section from '@/components/Section';
 

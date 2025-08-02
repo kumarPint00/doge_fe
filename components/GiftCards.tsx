@@ -78,7 +78,7 @@ export default function GiftCardsV2() {
                 }}
               >
                 <Image
-                  src="/gift-create.png"   // 240 × 240 transparent PNG
+                  src="/gift-create.png"  
                   alt="giftbox create"
                   width={240}
                   height={240}
@@ -147,7 +147,7 @@ export default function GiftCardsV2() {
                 }}
               >
                 <Image
-                  src="/gift-claim.png"   // 240 × 240 transparent PNG
+                  src="/gift-claim.png"  
                   alt="giftbox claim"
                   width={240}
                   height={240}
