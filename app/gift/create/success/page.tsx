@@ -70,7 +70,7 @@ export default function GiftReady() {
       >
         {/* gift emoji / icon */}
         <Image
-          src="/gift-icon.png"   /* 48×48 png in /public */
+          src="/gift.svg"   /* 48×48 svg in /public */
           alt="gift icon"
           width={48}
           height={48}
