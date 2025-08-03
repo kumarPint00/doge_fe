@@ -92,12 +92,12 @@ export default function ClaimGiftPage() {
       </Container>
 
       {/* toast */}
-      <Snackbar
-        open={!!toast}
-        autoHideDuration={2500}
-        onClose={() => setToast(null)}
-      >
-        {toast && (
+      {toast && (
+        <Snackbar
+          open={!!toast}
+          autoHideDuration={2500}
+          onClose={() => setToast(null)}
+        >
           <Alert
             onClose={() => setToast(null)}
             severity={toast.ok ? 'success' : 'error'}
@@ -105,8 +105,8 @@ export default function ClaimGiftPage() {
           >
             {toast.msg}
           </Alert>
-        )}
-      </Snackbar>
+        </Snackbar>
+      )}
     </Section>
   );
 }

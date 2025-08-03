@@ -13,7 +13,7 @@ import {
  *  – 0.0123 ETH  | 0xAbc…789 address  (when connected)
  */
 export default function WalletWidget() {
-  const { connect, connected, address, ethBal, prices } = useWalletData();
+ const { connect, connected, address, ethBal } = useWalletData(); // <- inside hook, call useWallet()
 
   /* still fetching ETH balance after connect */
   if (connected && ethBal === undefined) {

@@ -10,7 +10,6 @@ import LaunchIcon from '@mui/icons-material/Launch';
 export default function WhyV2() {
   return (
     <Section
-      id="why"
       sx={{
         py: { xs: 8, md: 10 },
         textAlign: 'center',

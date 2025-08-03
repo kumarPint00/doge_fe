@@ -3,29 +3,31 @@ import {
   Paper,
   Typography,
   Grid,
-  Select,
-  MenuItem,
   TextField,
   Button,
+  CircularProgress,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from 'react';
-import { GiftItem } from '@/types/gift';
+import { Token } from '@/types/token';           // { id,name,symbol,image,balance,usd }
 import TokenPickerV2 from './TokenS';
 
 interface Props {
-  tokens: GiftItem[];
-  onAdd: (item: GiftItem & { amount: number }) => void;
+  tokens: Token[];                               // live wallet tokens from useWalletTokens
+  loading: boolean;                              // pass loading flag so we can show spinner
+  onAdd: (item: Token & { amount: number }) => void;
 }
 
-export default function TokenAddCard({ tokens, onAdd }: Props) {
+export default function TokenAddCard({ tokens, loading, onAdd }: Props) {
   const [tokenId, setTokenId] = useState('');
-  const [amount, setAmount] = useState('');
+  const [amount,  setAmount]  = useState('');
 
-  const handle = () => {
-    const t = tokens.find((x) => x.id === tokenId);
-    if (!t || !amount) return;
-    onAdd({ ...t, amount: Number(amount) });
+  const selected = tokens.find((t) => t.id === tokenId) || null;
+  const amountNum = Number(amount);
+
+  const handleAdd = () => {
+    if (!selected || !amountNum) return;
+    onAdd({ ...selected, amount: amountNum });
     setTokenId('');
     setAmount('');
   };
@@ -38,36 +40,17 @@ export default function TokenAddCard({ tokens, onAdd }: Props) {
 
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
-          {/* <Select
-            fullWidth
-            value={tokenId}
-            displayEmpty
-            onChange={(e) => setTokenId(e.target.value as string)}
-          >
-            <MenuItem value="">
-              <em>Select Token</em>
-            </MenuItem>
-            {tokens.map((t) => (
-              <MenuItem key={t.id} value={t.id}>
-                {t.name}
-              </MenuItem>
-            ))}
-          </Select> */}
-             <TokenPickerV2
-                      tokens={tokens}
-                      selected={tokens.find((t) => t.id === tokenId) || null}
-                      onAdd={(t) => {
-                        setTokenId(t.id);
-                        setAmount('');
-                      }}
-                      onRemove={(id) => {
-                        if (id === tokenId) {
-                          setTokenId('');
-                          setAmount('');
-                        }
-                      }}
-                    />
+          {loading && !tokens.length ? (
+            <CircularProgress size={28} />
+          ) : (
+            <TokenPickerV2
+              selected={selected}
+              onAdd={(t) => setTokenId(t.id)}
+              onRemove={() => setTokenId('')}
+            />
+          )}
         </Grid>
+
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
@@ -90,7 +73,8 @@ export default function TokenAddCard({ tokens, onAdd }: Props) {
           fontWeight: 700,
           '&:hover': { bgcolor: '#0068ff' },
         }}
-        onClick={handle}
+        disabled={!selected || !amountNum}
+        onClick={handleAdd}
       >
         Add Another Item
       </Button>

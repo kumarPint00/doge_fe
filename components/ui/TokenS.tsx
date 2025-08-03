@@ -10,37 +10,34 @@ import {
   IconButton,
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon   from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useState, MouseEvent } from 'react';
 import Image from 'next/image';
 import { GiftItem } from '@/types/gift';
+import useWalletNfts from '@/lib/hooks/useWalletNft';
+import useWalletTokens from '@/lib/hooks/useWalletToken';
+import { useWallet } from '@/context/WalletContext';
 
-interface Token  {
-  usd: number;
-  balance: number;
-  tokens: GiftItem[];
-  selected: GiftItem | null;
-  onAdd: (t: GiftItem) => void;
-  onRemove: (id: string) => void;
-}
+import { Token } from '@/types/token';
 
 interface Props {
-  tokens: Token[];
   selected: Token | null;
-  onAdd:    (t: Token) => void;
+  onAdd: (t: Token) => void;
   onRemove: (id: string) => void;
 }
 
 export default function TokenPickerV2({
-  tokens,
   selected,
   onAdd,
   onRemove,
 }: Props) {
   const [anchor, setAnchor] = useState<null | HTMLElement>(null);
-  const open   = Boolean(anchor);
+  const open = Boolean(anchor);
   const handle = (e: MouseEvent<HTMLDivElement>) => setAnchor(e.currentTarget);
-  const close  = () => setAnchor(null);
+  const close = () => setAnchor(null);
+  const { provider, address } = useWallet();   // ← now resolves
+  const { tokens } = useWalletTokens(provider, address);
+  const { nfts } = useWalletNfts(address);
 
   return (
     <>
@@ -100,7 +97,7 @@ export default function TokenPickerV2({
               {/* avatar */}
               <ListItemIcon sx={{ minWidth: 36 }}>
                 <Image
-                  src={t.image}
+                  src={t.image || '/placeholder.png'}
                   alt={t.symbol}
                   width={28}
                   height={28}

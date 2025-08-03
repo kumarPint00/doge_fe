@@ -9,9 +9,17 @@ import StepIndicator from '@/components/ui/StepIndicator';
 import { useRouter } from 'next/navigation';
 
 const dummy: GiftItem[] = [
-  { id: '1', name: 'USDC', symbol: 'USDC', type: 'ERC20', amount: 1, image: '/usdc.png' },
-  { id: '2', name: 'DogeGF', symbol: 'DOGEGF', type: 'ERC20', amount: 1000, image: '/dogegf.png' },
-  { id: '3', name: 'Cool Cat #123', type: 'NFT', image: '/nft.png' }
+  { id: '1', name: 'USDC', symbol: 'USDC', type: 'ERC20', amount: 1, image: '/usdc.png', usd: 1 },
+  { id: '2', name: 'DogeGF', symbol: 'DOGEGF', type: 'ERC20', amount: 1000, image: '/dogegf.png', usd: 10 },
+  { id: '3', name: 'Cool Cat #123', type: 'NFT', image: '/nft.png', usd: 100 },
+  { id: '4', name: 'CryptoPunk #456', type: 'NFT', image: '/nft2.png', usd: 200 },
+  { id: '5', name: 'Rare Token', symbol: 'RRT', type: 'ERC20', amount: 500, image: '/rare-token.png', usd: 50 },
+  { id: '6', name: 'Mystery Box', type: 'NFT', image: '/mystery-box.png', usd: 150 },
+  { id: '7', name: 'Limited Edition Card', type: 'NFT', image: '/limited-card.png', usd: 300 },
+  { id: '8', name: 'Exclusive Token', symbol: 'EXC', type: 'ERC20', amount: 200, image: '/exclusive-token.png', usd: 75 },
+  { id: '9', name: 'Virtual Asset', type: 'NFT', image: '/virtual-asset.png', usd: 120 },
+  { id: '10', name: 'Collectible Item', type: 'NFT', image: '/collectible-item.png', usd: 80 },
+
 ];
 
 export default function SelectPage() {

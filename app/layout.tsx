@@ -4,6 +4,7 @@ import '@/app/globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
+import { WalletProvider } from '@/context/WalletContext';
 
 export const metadata: Metadata = {
   title: 'DogeGiFty',
@@ -16,9 +17,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <ThemeRegistry>
           <EscrowProvider>
-            <Navbar />
-            {children}
-            <Footer />
+            <WalletProvider>
+              <Navbar />
+              {children}
+              <Footer />
+            </WalletProvider>
           </EscrowProvider>
         </ThemeRegistry>
       </body>

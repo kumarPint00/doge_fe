@@ -1,25 +1,23 @@
 'use client';
-import {
-  Box,
-  Button,
-  Grid,
-  Paper,
-  Typography,
-} from '@mui/material';
+import { Box, Grid, Paper, Typography, Button } from '@mui/material';
 import Image from 'next/image';
-import { GiftItem } from '@/types/gift';
+import { GiftItem } from '@/types/gift';   // or your own NFT type
 
-interface Nft extends GiftItem {
-  usd: number;
-}
-
-interface Props {
-  nfts: Nft[];
+export interface NftGalleryProps {
+  nfts: GiftItem[];          // ← THIS is the prop TypeScript must see
   selectedIds: string[];
-  onToggle: (n: Nft) => void;
+  onToggle: (n: GiftItem) => void;
 }
 
-export default function NftGallery({ nfts, selectedIds, onToggle }: Props) {
+export default function NftGallery({ nfts, selectedIds, onToggle }: NftGalleryProps) {
+  if (!nfts.length) {
+    return (
+      <Paper sx={{ p: 4, borderRadius: 4 }}>
+        <Typography textAlign="center">No NFTs found in wallet.</Typography>
+      </Paper>
+    );
+  }
+
   return (
     <Paper sx={{ p: 4, borderRadius: 4 }}>
       <Typography fontWeight={700} mb={3} fontSize={20}>
@@ -41,11 +39,14 @@ export default function NftGallery({ nfts, selectedIds, onToggle }: Props) {
                   }}
                 >
                   <Image
-                    src={n.image}
+                    src={n.image || '/placeholder.png'}
                     alt={n.name}
                     width={160}
                     height={160}
                     style={{ width: '100%', height: 'auto' }}
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = '/placeholder.png';
+                    }}
                   />
                 </Box>
 
@@ -65,9 +66,7 @@ export default function NftGallery({ nfts, selectedIds, onToggle }: Props) {
                     borderRadius: 999,
                     textTransform: 'none',
                     fontWeight: 700,
-                    '&:hover': {
-                      bgcolor: added ? 'error.dark' : '#0068ff',
-                    },
+                    '&:hover': { bgcolor: added ? 'error.dark' : '#0068ff' },
                   }}
                   onClick={() => onToggle(n)}
                 >

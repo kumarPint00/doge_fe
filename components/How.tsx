@@ -40,7 +40,6 @@ export default function HowItWorksV2() {
 
   return (
     <Section
-      id="how"
       sx={{
         bgcolor: '#E1EFFF',                     
         py: { xs: 8, md: 10 },
