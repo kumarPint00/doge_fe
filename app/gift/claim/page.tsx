@@ -80,7 +80,7 @@ export default function ClaimGiftPage() {
           {/* RIGHT: doge image */}
           <Grid item xs={12} md={6} textAlign="center">
             <Image
-              src="/dogeGift.png"
+              src="/dogeGift.svg"
               alt="doge in box"
               width={420}
               height={420}
