@@ -8,6 +8,8 @@ import {
 } from '@mui/material';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Section from '@/components/Section';
+import { Suspense } from 'react';
+export const dynamic = 'force-dynamic';   
 
 export default function GiftConfirmPage() {
   const router       = useRouter();
@@ -15,6 +17,7 @@ export default function GiftConfirmPage() {
   const code         = searchParams.get('code') ?? '—';
 
   return (
+    // <Suspense fallback={<div>Loading...</div>}>
     <Section>
       <Container maxWidth="sm" sx={{ textAlign: 'center' }}>
         <Paper sx={{ p: { xs: 4, md: 6 }, borderRadius: 4 }}>
@@ -73,5 +76,6 @@ export default function GiftConfirmPage() {
         </Paper>
       </Container>
     </Section>
+    // </Suspense>
   );
 }

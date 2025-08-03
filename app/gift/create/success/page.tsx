@@ -11,10 +11,11 @@ import {
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ShareIcon from '@mui/icons-material/Share';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Section from '@/components/Section';
+export const dynamic = 'force-dynamic';   
 
 export default function GiftReady() {
   /* ---------------------------------------------------------------- */
@@ -55,6 +56,7 @@ export default function GiftReady() {
 
   return (
     <>
+    {/* <Suspense fallback={<div>Loading...</div>}> */}
       <Section>
       {/* gradient backdrop inside layout (nav + footer already there) */}
       <Container
@@ -168,6 +170,7 @@ export default function GiftReady() {
         </Alert>
       </Snackbar>
       </Section>
+    {/* </Suspense> */}
     </>
   );
 }
