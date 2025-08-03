@@ -35,7 +35,7 @@ async function fetchDummyBalances(): Promise<Token[]> {
     },
     {
       id: '3',
-      name:'Ethereum',
+      name: 'Ethereum',
       symbol: 'ETH',
       address: '0xC02aaA39b223FE8D0A0bA11b5E5e3D2a1fFf0',
       decimals: 18,

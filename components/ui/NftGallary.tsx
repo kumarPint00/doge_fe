@@ -1,10 +1,10 @@
 'use client';
 import { Box, Grid, Paper, Typography, Button } from '@mui/material';
 import Image from 'next/image';
-import { GiftItem } from '@/types/gift';   // or your own NFT type
+import { GiftItem } from '@/types/gift';   
 
 export interface NftGalleryProps {
-  nfts: GiftItem[];          // ← THIS is the prop TypeScript must see
+  nfts: GiftItem[];          
   selectedIds: string[];
   onToggle: (n: GiftItem) => void;
 }

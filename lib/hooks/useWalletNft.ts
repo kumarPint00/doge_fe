@@ -9,12 +9,6 @@ async function fetchNfts(addr: string) {
   const url   = `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY}/getNFTs?${query}`;
   const res   = await fetch(url, { cache: 'no-store' });
   const json  = await res.json();
-  // return json.ownedNfts.map((n: any) => ({
-  //   id: `${n.contract.address}:${n.tokenId}`,
-  //   name: n.title || `#${n.tokenId}`,
-  //   image: n.media[0]?.gateway || n.media[0]?.raw || '/placeholder.png',
-  //   usd: 0, // could call OpenSea floor-price API later
-  // }));
 
     const toHttp = (u: string) =>
     u.startsWith('ipfs://')
