@@ -34,28 +34,7 @@ export default function ComingSoonV2() {
           }}
         >
           {/* tiny overlapping avatars (just an accent, optional) */}
-          <Stack
-            direction="row"
-            spacing={-1}
-            justifyContent="center"
-            mb={2}
-          >
-            <Image
-              src="/avatar1.png"
-              alt="avatar"
-              width={36}
-              height={36}
-              style={{ borderRadius: '50%', border: '2px solid #fff' }}
-            />
-            <Image
-              src="/avatar2.png"
-              alt="avatar"
-              width={36}
-              height={36}
-              style={{ borderRadius: '50%', border: '2px solid #fff' }}
-            />
-          </Stack>
-
+          
           <Typography
             mb={1}
             sx={{
@@ -77,9 +56,14 @@ export default function ComingSoonV2() {
             }}
           >
             “Kindness&nbsp;for&nbsp;Causes”&nbsp;
-            <span role="img" aria-label="ribbon">
-              🎗️
-            </span>
+           
+            <Image
+              src="/handheart.png"
+              alt="Coming Soon"
+              width={40}
+              height={40}
+              style={{ marginLeft: '10px', borderRadius: '50%' }}
+            />
           </Typography>
 
           {/* eslint-disable-next-line react/no-unescaped-entities */}

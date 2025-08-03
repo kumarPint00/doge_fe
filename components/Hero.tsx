@@ -36,7 +36,7 @@ export default function HeroV2() {
 
           <Grid item xs={12} md={6} textAlign="center">
             <Image
-              src="/doge-hero.png"     
+              src="/dogeGift.svg"     
               alt="doge in gift box"
               width={420}
               height={420}

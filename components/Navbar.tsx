@@ -20,6 +20,7 @@ import {
 import EscrowContext from '@/context/EscrowContext';
 
 import WalletWidget from './WalletWidget';
+import Image from 'next/image';
 
 /* ------------------------------------------------------------ */
 
@@ -68,11 +69,15 @@ export default function NavbarV2() {
               href="/"
               sx={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}
             >
-              <Box component="img" src="/logo.png" alt="logo" sx={{ width: 32, height: 32, mr: 1 }} />
-              <Typography variant="h6" fontWeight={800} sx={{ color: '#0D1B3E' }}>
-                DogeGiFty
-              </Typography>
-            </Box>
+            <Image
+              src="/logo.svg"
+              alt="DogeGiFty Logo"
+              width={100}
+              height={100}
+              style={{ borderRadius: '50%' }}
+            />
+
+                        </Box>
 
             <Box sx={{ flexGrow: 1 }} />
 

@@ -78,7 +78,7 @@ export default function GiftCardsV2() {
                 }}
               >
                 <Image
-                  src="/gift-create.png"  
+                  src="/create-gift.png"  
                   alt="giftbox create"
                   width={240}
                   height={240}

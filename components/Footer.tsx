@@ -41,17 +41,11 @@ export default function FooterV2() {
             <Box display="flex" alignItems="center" gap={1}>
               <Box
                 component="img"
-                src="/logo.png"
+                src="/logo.svg"
                 alt="logo"
-                sx={{ width: 48, height: 48 }}
+                sx={{ width: 148, height: 148 }}
               />
-              <Typography
-                variant="h5"
-                fontWeight={800}
-                sx={{ color: '#0D1B3E' }}
-              >
-                DogeGiFty
-              </Typography>
+             
             </Box>
           </Grid>
 
