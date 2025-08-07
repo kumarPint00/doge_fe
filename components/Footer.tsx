@@ -23,7 +23,7 @@ const SocialBtn = styled(IconButton)(({ theme }) => ({
   '&:hover': { background: theme.palette.primary.dark },
 }));
 
-export default function FooterV2() {
+export default function Footer() {
   return (
     <Box
       component="footer"
@@ -34,7 +34,7 @@ export default function FooterV2() {
         backgroundColor: '#fff',
       }}
     >
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Grid container spacing={4} alignItems="flex-start">
           {/* logo */}
           <Grid item xs={12} md={3}>

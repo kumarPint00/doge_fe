@@ -13,12 +13,12 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Section from '@/components/Section';
 
-export default function ComingSoonV2() {
+export default function ComingSoon() {
   const [open, setOpen] = useState(false);
 
   return (
     <Section sx={{ py: { xs: 8, md: 12 } }}>
-      <Container maxWidth="md">
+      <Container maxWidth="xl">
         {/* blue rounded-corner card */}
         <Box
           sx={{

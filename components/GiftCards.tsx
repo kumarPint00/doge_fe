@@ -1,162 +1,254 @@
 'use client';
 import React from 'react';
-import Section from '@/components/Section';
 import {
   Box,
   Button,
   Container,
   Grid,
   Typography,
-  useTheme,
 } from '@mui/material';
-import LaunchIcon from '@mui/icons-material/Launch';
 import Image from 'next/image';
 
-export default function GiftCardsV2() {
-  const theme = useTheme();
-
+export default function GiftCards() {
   return (
-    <Section sx={{ py: { xs: 8, md: 10 } }}>
-      <Container maxWidth="lg">
+    <Box sx={{ px: { xs: 2, lg: 6 }, py: { xs: 4, lg: 6 } }}>
+      <Container maxWidth="xl">
         <Grid container spacing={4}>
           {/* CREATE */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} lg={6}>
             <Box
               sx={{
-                height: { xs: 340, md: 420 },
-                p: 5,
-                borderRadius: 10,
-                color: '#fff',
-                position: 'relative',
+                bgcolor: '#2563eb', // blue-600
+                borderRadius: 6, // Increased border radius to match reference
                 overflow: 'hidden',
-                backgroundImage:
-                  'linear-gradient(180deg,#0054ff 0%,#0041d8 55%,#0030b4 100%)',
+                position: 'relative',
+                height: 400, // Reduced height to match reference
                 display: 'flex',
                 flexDirection: 'column',
+                justifyContent: 'space-between',
               }}
             >
-              <Box zIndex={2}>
+              {/* Content Area */}
+              <Box sx={{ color: 'white', p: 4, zIndex: 2 }}>
                 <Typography
-                  variant="h4"
-                  fontWeight={800}
-                  mb={2}
-                  sx={{ lineHeight: 1.2 }}
+                  variant="h2"
+                  sx={{
+                    fontSize: { xs: '1.5rem', lg: '2rem' },
+                    fontWeight: 900,
+                    mb: 2,
+                    lineHeight: 1.2,
+                  }}
                 >
                   Create a Gift Pack
                 </Typography>
 
-                <Typography mb={3} sx={{ opacity: 0.95, maxWidth: 280 }}>
-                  Choose an amount, add a message, and send crypto as a unique
-                  digital gift.
+                <Typography
+                  sx={{
+                    mb: 4,
+                    fontSize: '1rem',
+                    color: 'rgba(255,255,255,0.9)',
+                    maxWidth: 280,
+                    lineHeight: 1.4,
+                  }}
+                >
+                  Choose an amount, add a message, and send crypto as a unique digital gift.
                 </Typography>
 
                 <Button
-                  variant="contained"
                   href="/gift/create"
-                  endIcon={<LaunchIcon sx={{ fontSize: 16 }} />}
                   sx={{
-                    bgcolor: '#ff6d8d',
-                    textTransform: 'none',
-                    fontWeight: 700,
+                    bgcolor: '#f472b6', // pink-400
+                    '&:hover': { bgcolor: '#ec4899' }, // pink-500
+                    color: 'white',
+                    fontWeight: 600,
+                    py: 1.5,
                     px: 4,
-                    '&:hover': { bgcolor: '#ff5c7d' },
-                    borderRadius: 8,
+                    borderRadius: 999,
+                    textTransform: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 1,
+                    fontSize: '0.9rem',
                   }}
                 >
                   Start Gifting
+                  <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
                 </Button>
               </Box>
 
-              {/* hero art */}
+              {/* Image positioned in bottom-right corner */}
               <Box
                 sx={{
                   position: 'absolute',
                   bottom: 0,
                   right: 0,
-                  width: { xs: 180, md: 240 },
-                  transform: 'translate(15%, 10%)',
+                  width: 200,
+                  height: 180,
+                  zIndex: 1,
                 }}
               >
                 <Image
-                  src="/create-gift.png"  
-                  alt="giftbox create"
-                  width={240}
-                  height={240}
+                  src="/create-gift.png"
+                  alt="Gift Box"
+                  width={200}
+                  height={180}
+                  style={{ 
+                    width: '100%', 
+                    height: '100%', 
+                    objectFit: 'contain',
+                    objectPosition: 'bottom right'
+                  }}
                 />
+              </Box>
+
+              {/* Decorative star */}
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: 100,
+                  right: 100,
+                  color: '#ffd700',
+                  fontSize: '16px',
+                  zIndex: 2,
+                }}
+              >
+                ⭐
               </Box>
             </Box>
           </Grid>
 
           {/* CLAIM */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} lg={6}>
             <Box
               sx={{
-                height: { xs: 340, md: 420 },
-                p: 5,
-                borderRadius: 10,
-                color: '#c4125e',
-                position: 'relative',
+                bgcolor: '#fbb6ce', // pink-300
+                borderRadius: 6, // Increased border radius to match reference
                 overflow: 'hidden',
-                backgroundImage:
-                  'linear-gradient(180deg,#ffd1dd 0%,#ffc3d4 45%,#ffb4c9 100%)',
+                position: 'relative',
+                height: 400, // Same height as create card
                 display: 'flex',
                 flexDirection: 'column',
+                justifyContent: 'space-between',
               }}
             >
-              <Box zIndex={2}>
+              {/* Content Area */}
+              <Box sx={{ color: '#831843', p: 4, zIndex: 2 }}>
                 <Typography
-                  variant="h4"
-                  fontWeight={800}
-                  mb={2}
-                  sx={{ lineHeight: 1.2 }}
+                  variant="h2"
+                  sx={{
+                    fontSize: { xs: '1.5rem', lg: '2rem' },
+                    fontWeight: 900,
+                    mb: 2,
+                    lineHeight: 1.2,
+                  }}
                 >
                   Claim a Gift Pack
                 </Typography>
 
-                <Typography mb={3} sx={{ maxWidth: 280 }}>
-                  Your gift is ready to claim. Just follow a few steps to
-                  unlock it.
+                <Typography
+                  sx={{
+                    mb: 4,
+                    fontSize: '1rem',
+                    color: 'rgba(131,24,67,0.9)',
+                    maxWidth: 280,
+                    lineHeight: 1.4,
+                  }}
+                >
+                  Your gift is ready to claim. Just follow a few steps to unlock it.
                 </Typography>
 
                 <Button
-                  variant="contained"
                   href="/gift/claim"
-                  endIcon={<LaunchIcon sx={{ fontSize: 16 }} />}
                   sx={{
-                    bgcolor: '#0b39c6',
-                    color: '#fff',
-                    textTransform: 'none',
-                    fontWeight: 700,
+                    bgcolor: '#1d4ed8', // blue-700
+                    '&:hover': { bgcolor: '#1e40af' }, // blue-800
+                    color: 'white',
+                    fontWeight: 600,
+                    py: 1.5,
                     px: 4,
-                    '&:hover': { bgcolor: '#082f9f' },
-                    borderRadius: 8,
+                    borderRadius: 999,
+                    textTransform: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 1,
+                    fontSize: '0.9rem',
                   }}
                 >
                   Start Claiming
+                  <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
                 </Button>
               </Box>
 
-              {/* hero art */}
+              {/* Image positioned in bottom-right corner */}
               <Box
                 sx={{
                   position: 'absolute',
                   bottom: 0,
                   right: 0,
-                  width: { xs: 180, md: 240 },
-                  transform: 'translate(25%, 15%)',
+                  width: 200,
+                  height: 180,
+                  zIndex: 1,
                 }}
               >
                 <Image
-                  src="/gift-claim.png"  
-                  alt="giftbox claim"
-                  width={240}
-                  height={240}
+                  src="/gift-claim.png"
+                  alt="Gift Heart Box"
+                  width={200}
+                  height={180}
+                  style={{ 
+                    width: '100%', 
+                    height: '100%', 
+                    objectFit: 'contain',
+                    objectPosition: 'bottom right'
+                  }}
                 />
+              </Box>
+
+              {/* Decorative elements */}
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: 80,
+                  right: 80,
+                  color: '#1d4ed8',
+                  fontSize: '16px',
+                  zIndex: 2,
+                }}
+              >
+                ⭐
+              </Box>
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: 120,
+                  right: 40,
+                  color: '#ffd700',
+                  fontSize: '12px',
+                  zIndex: 2,
+                }}
+              >
+                ⭐
+              </Box>
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: 140,
+                  right: 140,
+                  color: '#ffd700',
+                  fontSize: '12px',
+                  zIndex: 2,
+                }}
+              >
+                ⭐
               </Box>
             </Box>
           </Grid>
         </Grid>
       </Container>
-    </Section>
+    </Box>
   );
 }

@@ -13,10 +13,9 @@ export default function Section({
     <Box
       component="section"
       sx={{
-        /* 🌅 default background wash */
+        /* 🌅 default background wash - matches Hero */
         background:
-          'radial-gradient(circle at 0 20%, #fde7c3 0%, rgba(253,231,195,0) 60%), ' +
-          'radial-gradient(circle at 100% 80%, #ffd6e8 0%, rgba(255,214,232,0) 55%)',
+          'radial-gradient(circle at 0% 0%, #f9dfb6 0%, rgba(249,223,182,0) 45%), #fff7fb',
         py: { xs: 6, md: 8 },
         ...sx,
       }}
