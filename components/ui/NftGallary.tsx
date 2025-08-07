@@ -1,22 +1,105 @@
 'use client';
 import { Box, Grid, Paper, Typography, Button } from '@mui/material';
 import Image from 'next/image';
-import { GiftItem } from '@/types/gift';   
+import { GiftItem } from '@/types/gift';
+import NftCard from './NFTCard';
+
+/* —— 8 pretty demo NFTs —————————————————————————— */
+const demoNfts: GiftItem[] = [
+  {
+    id: 'demo-1',
+    name: 'Basquiat Toy Face',
+    image: '/nft-demo/basquiat.png',
+    usd: 783.9,
+    symbol: 'BASQ',
+    type: 'NFT',
+    balance: 1,
+    amount: 1,
+  },
+  {
+    id: 'demo-2',
+    name: 'Warhol Toy Face',
+    image: '/nft-demo/warhol.png',
+    usd: 420.9,
+    symbol: 'WARH',
+    type: 'NFT',
+    balance: 1,
+    amount: 1,
+  },
+  {
+    id: 'demo-3',
+    name: 'Dali Toy Face',
+    image: '/nft-demo/dali.png',
+    usd: 783.9,
+    symbol: 'DALI', 
+    type: 'NFT',
+    balance: 1,
+    amount: 1,
+  },
+  {
+    id: 'demo-4',
+    name: 'The Bakery',
+    image: '/nft-demo/bakery.png',
+    usd: 783.9,
+    symbol: 'BAKE',
+    type: 'NFT',
+    balance: 1,
+    amount: 1,
+  },
+  {
+    id: 'demo-5',
+    name: 'Pirate Toy Face',
+    image: '/nft-demo/pirate.png',
+    usd: 783.9,
+    symbol: 'PIRATE',
+    type: 'NFT',
+    balance: 1,
+    amount: 1,
+  },
+  {
+    id: 'demo-6',
+    name: 'Autobots Assemble',
+    image: '/nft-demo/autobots.png',
+    symbol: 'AUTO',
+    type: 'NFT',
+    balance: 1,
+    amount: 1,
+    usd: 783.9,
+  },
+  {
+    id: 'demo-7',
+    name: 'Viking Toy Face',
+    image: '/nft-demo/viking.png',
+    symbol: 'VIKING',
+    type: 'NFT',
+    balance: 1,
+    amount: 1,
+    usd: 783.9,
+  },
+  {
+    id: 'demo-8',
+    name: 'Bowie Toy Face',
+    image: '/nft-demo/bowie.png',
+    usd: 783.9,
+    symbol: 'BOWIE',
+    type: 'NFT',
+    balance: 1,
+    amount: 1,
+  },
+];
 
 export interface NftGalleryProps {
-  nfts: GiftItem[];          
+  nfts: GiftItem[];
   selectedIds: string[];
   onToggle: (n: GiftItem) => void;
 }
 
-export default function NftGallery({ nfts, selectedIds, onToggle }: NftGalleryProps) {
-  if (!nfts.length) {
-    return (
-      <Paper sx={{ p: 4, borderRadius: 4 }}>
-        <Typography textAlign="center">No NFTs found in wallet.</Typography>
-      </Paper>
-    );
-  }
+export default function NftGallery({
+  nfts,
+  selectedIds,
+  onToggle,
+}: NftGalleryProps) {
+  const gallery = nfts.length ? nfts : demoNfts;
 
   return (
     <Paper sx={{ p: 4, borderRadius: 4 }}>
@@ -25,58 +108,17 @@ export default function NftGallery({ nfts, selectedIds, onToggle }: NftGalleryPr
       </Typography>
 
       <Grid container spacing={3}>
-        {nfts.map((n) => {
-          const added = selectedIds.includes(n.id);
-          return (
-            <Grid item xs={6} md={3} key={n.id}>
-              <Box textAlign="center">
-                <Box
-                  sx={{
-                    mb: 1.5,
-                    borderRadius: 3,
-                    overflow: 'hidden',
-                    boxShadow: added ? 4 : 2,
-                  }}
-                >
-                  <Image
-                    src={n.image || '/placeholder.png'}
-                    alt={n.name}
-                    width={160}
-                    height={160}
-                    style={{ width: '100%', height: 'auto' }}
-                    onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src = '/placeholder.png';
-                    }}
-                  />
-                </Box>
+  {gallery.map((n) => (
+    <Grid item xs={6} md={3} key={n.id}>
+      <NftCard
+        nft={n}
+        added={selectedIds.includes(n.id)}
+        onToggle={onToggle}
+      />
+    </Grid>
+  ))}
+</Grid>
 
-                <Typography fontSize={14} fontWeight={600} noWrap>
-                  {n.name}
-                </Typography>
-                <Typography fontSize={13} color="text.secondary" mb={1}>
-                  ${n.usd.toFixed(2)}
-                </Typography>
-
-                <Button
-                  fullWidth
-                  variant="contained"
-                  size="small"
-                  sx={{
-                    bgcolor: added ? 'error.main' : '#0B7EFF',
-                    borderRadius: 999,
-                    textTransform: 'none',
-                    fontWeight: 700,
-                    '&:hover': { bgcolor: added ? 'error.dark' : '#0068ff' },
-                  }}
-                  onClick={() => onToggle(n)}
-                >
-                  {added ? 'Remove' : 'Add'}
-                </Button>
-              </Box>
-            </Grid>
-          );
-        })}
-      </Grid>
     </Paper>
   );
 }

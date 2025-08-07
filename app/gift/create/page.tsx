@@ -80,7 +80,7 @@ const { tokens, loading: tokLoading }   = useWalletTokens(provider, address);
 
   return (
     <Section>
-      <Container maxWidth="sm">
+      <Container >
         <Typography variant="h3" textAlign="center" mb={4}>
           What&apos;s in your pack?
         </Typography>
