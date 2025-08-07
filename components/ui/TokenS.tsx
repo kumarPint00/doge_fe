@@ -6,14 +6,12 @@ import {
   MenuItem,
   ListItemIcon,
   Typography,
-  Paper,
-  IconButton,
+  Paper
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useState, MouseEvent } from 'react';
 import Image from 'next/image';
-import { GiftItem } from '@/types/gift';
 import useWalletNfts from '@/lib/hooks/useWalletNft';
 import useWalletTokens from '@/lib/hooks/useWalletToken';
 import { useWallet } from '@/context/WalletContext';

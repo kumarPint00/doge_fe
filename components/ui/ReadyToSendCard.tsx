@@ -11,22 +11,13 @@ import {
 import { GiftItem } from '@/types/gift';
 
 interface Props {
-  items: GiftItem[];       
+  items: GiftItem[];
   message: string;
   secretCode: string;
   onConfirm: () => void;
   disabled?: boolean;
 }
 
-/**
- * Full-width confirmation panel that matches the “Ready to Send?” mock:
- * – headline
- * – compact pill showing the first token + first NFT
- * – message line
- * – grey code box
- * – big blue confirm button
- * – footnote
- */
 export default function ReadyToSendCard({
   items,
   message,
@@ -35,7 +26,7 @@ export default function ReadyToSendCard({
   disabled = false,
 }: Props) {
   const firstToken = items.find((i) => i.type === 'ERC20');
-  const firstNft   = items.find((i) => i.type === 'NFT');
+  const firstNft = items.find((i) => i.type === 'NFT');
 
   return (
     <Paper sx={{ p: { xs: 4, md: 6 }, borderRadius: 4, textAlign: 'center' }}>
@@ -55,7 +46,7 @@ export default function ReadyToSendCard({
         spacing={2}
         mb={5}
       >
-        {/* total USD placeholder */} 
+        {/* total USD placeholder */}
         <Typography variant="h5" fontWeight={800}>
           ${firstToken?.amount ? (firstToken.amount * 1000).toFixed(0) : '—'}
         </Typography>
@@ -104,44 +95,48 @@ export default function ReadyToSendCard({
       </Typography>
 
       {/* secret code */}
-      <Typography fontWeight={700} mb={1}>
-        Secret Code
-      </Typography>
-      <Box
-        sx={{
-          bgcolor: '#eeeeee',
-          borderRadius: 1,
-          px: 6,
-          py: 2,
-          mx: 'auto',
-          display: 'inline-block',
-          fontWeight: 800,
-          letterSpacing: 1,
-          fontSize: 20,
-          mb: 4,
-        }}
-      >
-        {secretCode}
-      </Box>
+      <Stack direction="column" alignItems="center" spacing={4}>
+        <Box>
+          <Typography fontWeight={700} mb={1}>
+            Secret Code
+          </Typography>
+          <Box
+            sx={{
+              bgcolor: '#eeeeee',
+              borderRadius: 1,
+              px: 6,
+              py: 2,
+              mx: 'auto',
+              display: 'inline-block',
+              fontWeight: 800,
+              letterSpacing: 1,
+              fontSize: 20,
+            }}
+          >
+            {secretCode}
+          </Box>
+        </Box>
 
-      {/* confirm */}
-      <Button
-        variant="contained"
-        size="large"
-        onClick={onConfirm}
-        disabled={disabled}
-        sx={{
-          bgcolor: '#0B7EFF',
-          textTransform: 'none',
-          fontWeight: 700,
-          borderRadius: 999,
-          px: 6,
-          py: 1.25,
-          '&:hover': { bgcolor: '#0068ff' },
-        }}
-      >
-        Confirm &amp; Lock Gift Pack
-      </Button>
+        {/* confirm */}
+        <Button
+          variant="contained"
+          size="large"
+          onClick={onConfirm}
+          disabled={disabled}
+          sx={{
+            bgcolor: '#0B7EFF',
+            textTransform: 'none',
+            fontWeight: 700,
+            borderRadius: 999,
+            px: 6,
+            py: 1.25,
+            '&:hover': { bgcolor: '#0068ff' },
+          }}
+        >
+          Confirm &amp; Lock Gift Pack
+        </Button>
+      </Stack>
+
 
       <Typography
         fontSize={12}

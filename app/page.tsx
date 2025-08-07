@@ -1,8 +1,8 @@
 import Hero from '@/components/Hero';
 import GiftCards from '@/components/GiftCards';
 import How from '@/components/How';
-import ComingSoon from '@/components/ComingSoon';
-import Why from '@/components/Why';
+import ComingSoonWhy from '@/components/ComingSoonWhy';
+import GiftPackActions from '@/components/GiftPackActions';
 
 export default function HomePage(){
   return(
@@ -10,8 +10,7 @@ export default function HomePage(){
       <Hero/>
       <GiftCards/>
       <How/>
-      <ComingSoon/>
-      <Why/>
+      <ComingSoonWhy/>
     </>
   )
 }

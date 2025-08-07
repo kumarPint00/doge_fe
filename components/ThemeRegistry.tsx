@@ -1,23 +1,15 @@
-'use client';
-
-import { PropsWithChildren, useMemo } from 'react';
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
-import { CssBaseline, ThemeProvider } from '@mui/material';
+import { ReactNode } from 'react';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { ThemeProvider, CssBaseline } from '@mui/material';
 import theme from '@/lib/theme';
 
-export default function ThemeRegistry({ children }: PropsWithChildren) {
-  const cache = useMemo(() => {
-    const c = createCache({ key: 'mui' });
-    c.compat = true;
-    return c;
-  }, []);
+export default function ThemeRegistry({ children }: { children: ReactNode }) {
   return (
-    <CacheProvider value={cache}>
+    <AppRouterCacheProvider options={{ key: 'mui', prepend: true }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {children}
       </ThemeProvider>
-    </CacheProvider>
+    </AppRouterCacheProvider>
   );
 }

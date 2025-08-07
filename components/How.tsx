@@ -35,7 +35,7 @@ const CARDS: Card[] = [
   },
 ];
 
-export default function HowItWorksV2() {
+export default function How() {
   const theme = useTheme();
 
   return (
@@ -45,7 +45,7 @@ export default function HowItWorksV2() {
         py: { xs: 8, md: 10 },
       }}
     >
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Grid container spacing={6}>
           {/*  LEFT  */}
           <Grid item xs={12} md={4}>

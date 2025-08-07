@@ -1,4 +1,3 @@
-import Section from '@/components/Section';
 import {
   Box,
   Button,
@@ -7,17 +6,19 @@ import {
 } from '@mui/material';
 import LaunchIcon from '@mui/icons-material/Launch';
 
-export default function WhyV2() {
+export default function Why() {
   return (
-    <Section
+    <Box
       sx={{
         py: { xs: 8, md: 10 },
+        px: { xs: 2, lg: 6 },
         textAlign: 'center',
         backgroundImage:
           'radial-gradient(ellipse at 80% 20%, #ffd6e8 0%, rgba(255,214,232,0) 70%)',
       }}
+      id="why-dogs"
     >
-      <Container maxWidth="md">
+      <Container maxWidth="xl">
         {/* headline */}
         <Typography
           variant="h2"
@@ -61,6 +62,6 @@ export default function WhyV2() {
           Learn more about&nbsp;DogeGF
         </Button>
       </Container>
-    </Section>
+    </Box>
   );
 }

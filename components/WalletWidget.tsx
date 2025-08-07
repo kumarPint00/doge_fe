@@ -28,12 +28,13 @@ export default function WalletWidget() {
         size="small"
         onClick={connect}
         sx={{
-          bgcolor: '#0B7EFF',
+          bgcolor: '#2563eb', // blue-600 to match image
           textTransform: 'none',
-          fontWeight: 700,
+          fontWeight: 600,
           borderRadius: 999,
           px: 3,
-          '&:hover': { bgcolor: '#0068ff' },
+          py: 1,
+          '&:hover': { bgcolor: '#1d4ed8' }, // blue-700
         }}
       >
         Connect Wallet
@@ -47,14 +48,7 @@ export default function WalletWidget() {
       <Typography fontWeight={700}>
         {ethBal!.toFixed(4)} ETH
       </Typography>
-      <Typography color="text.secondary"  sx={{
-          bgcolor: '#0B7EFF',
-          textTransform: 'none',
-          fontWeight: 700,
-          borderRadius: 999,
-          px: 3,
-          '&:hover': { bgcolor: '#0068ff' },
-        }}>
+      <Typography color="text.secondary">
         {address.slice(0, 6)}…{address.slice(-4)}
       </Typography>
     </Box>

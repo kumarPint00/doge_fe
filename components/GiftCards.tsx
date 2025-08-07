@@ -1,162 +1,177 @@
 'use client';
-import React from 'react';
-import Section from '@/components/Section';
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Typography,
-  useTheme,
-} from '@mui/material';
-import LaunchIcon from '@mui/icons-material/Launch';
 import Image from 'next/image';
+import { Box, Button, Container, Grid, Typography } from '@mui/material';
 
-export default function GiftCardsV2() {
-  const theme = useTheme();
+type CardSpec = {
+  title: string;
+  blurb: string;
+  href: string;
+  btnLabel: string;
+  bg: string;         // gradient
+  text: string;       // heading colour
+  btn: string;        // button colour
+  btnHover: string;
+  img: string;
+  imgW: { xs: number; md: number };
+  imgH: { xs: number; md: number };
+  cardH: { xs: number; sm: number };
+};
+
+function GiftCard({
+  title,
+  blurb,
+  href,
+  btnLabel,
+  bg,
+  text,
+  btn,
+  btnHover,
+  img,
+  imgW,
+  imgH,
+  cardH,
+}: CardSpec) {
+  return (
+    <Box
+      sx={{
+        height: cardH,
+        borderRadius: { xs: 4, md: 8 },
+        overflow: 'hidden',
+        position: 'relative',
+        background: bg,
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      {/* copy text */}
+      <Box sx={{ p: { xs: 3.5, md: 5 }, color: text, flexGrow: 1 }}>
+        <Typography
+          component="h2"
+          sx={{
+            fontWeight: 900,
+            fontSize: { xs: '1.9rem', md: '2.4rem' },
+            lineHeight: 1.15,
+            fontFamily: ' __JetBrains_Mono_3c557b',
+            mb: 2,
+            color: text,
+            letterSpacing: '-0.02em',
+          }}
+        >
+          {title}
+        </Typography>
+
+        <Typography
+          sx={{
+            fontSize: { xs: '0.95rem', md: '1.05rem' },
+            lineHeight: 1.45,
+            maxWidth: 300,
+            mb: 5,
+            opacity: 0.94,
+            fontWeight: 500,
+            color: text,
+            fontFamily: 'Inter, sans-serif',
+            letterSpacing: '-0.01em',
+          }}
+        >
+          {blurb}
+        </Typography>
+
+        <Button
+          href={href}
+          sx={{
+            px: 4,
+            py: 1.4,
+            borderRadius: 999,
+            fontWeight: 600,
+            bgcolor: btn,
+            '&:hover': { bgcolor: btnHover },
+            color: '#fff',
+            textTransform: 'none',
+            fontSize: '0.9rem',
+            gap: 1,
+          }}
+        >
+          {btnLabel}
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M17 8l4 4-4 4M3 12h18" />
+          </svg>
+        </Button>
+      </Box>
+
+      {/* illustration */}
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          width: imgW,
+          height: imgH,
+        }}
+      >
+        <Image
+          src={img}
+          alt={title}
+          fill
+          style={{ objectFit: 'contain', objectPosition: 'bottom right' }}
+        />
+      </Box>
+    </Box>
+  );
+}
+
+export default function GiftCards() {
+  const cards: CardSpec[] = [
+    {
+      title: 'Create a Gift Pack',
+      blurb:
+        'Choose an amount, add a message, and send crypto as a unique digital gift.',
+      href: '/gift/create',
+      btnLabel: 'Start Gifting',
+      bg: 'linear-gradient(145deg,#0062ff 0%,#0038ff 100%)',
+      text: '#ffffff',
+      btn: '#ff5f95',
+      btnHover: '#ff4685',
+      img: '/create-gift.png',
+      imgW: { xs: 240, md: 320 },
+      imgH: { xs: 220, md: 200 },
+      cardH: { xs: 480, sm: 620 },
+    },
+    {
+      title: 'Claim a Gift Pack',
+      blurb: 'Your gift is ready to claim. Just follow a few steps to unlock it.',
+      href: '/gift/claim',
+      btnLabel: 'Start Claiming',
+      bg: 'linear-gradient(145deg,#ffd6e6 0%,#fbbad2 100%)',
+      text: '#c22d6d',
+      btn: '#1955ff',
+      btnHover: '#1646d4',
+      img: '/gift-claim.png',
+      imgW: { xs: 180, md: 220 },
+      imgH: { xs: 160, md: 200 },
+      cardH: { xs: 380, sm: 620 },
+    },
+  ];
 
   return (
-    <Section sx={{ py: { xs: 8, md: 10 } }}>
-      <Container maxWidth="lg">
-        <Grid container spacing={4}>
-          {/* CREATE */}
-          <Grid item xs={12} md={6}>
-            <Box
-              sx={{
-                height: { xs: 340, md: 420 },
-                p: 5,
-                borderRadius: 10,
-                color: '#fff',
-                position: 'relative',
-                overflow: 'hidden',
-                backgroundImage:
-                  'linear-gradient(180deg,#0054ff 0%,#0041d8 55%,#0030b4 100%)',
-                display: 'flex',
-                flexDirection: 'column',
-              }}
-            >
-              <Box zIndex={2}>
-                <Typography
-                  variant="h4"
-                  fontWeight={800}
-                  mb={2}
-                  sx={{ lineHeight: 1.2 }}
-                >
-                  Create a Gift Pack
-                </Typography>
-
-                <Typography mb={3} sx={{ opacity: 0.95, maxWidth: 280 }}>
-                  Choose an amount, add a message, and send crypto as a unique
-                  digital gift.
-                </Typography>
-
-                <Button
-                  variant="contained"
-                  href="/gift/create"
-                  endIcon={<LaunchIcon sx={{ fontSize: 16 }} />}
-                  sx={{
-                    bgcolor: '#ff6d8d',
-                    textTransform: 'none',
-                    fontWeight: 700,
-                    px: 4,
-                    '&:hover': { bgcolor: '#ff5c7d' },
-                    borderRadius: 8,
-                  }}
-                >
-                  Start Gifting
-                </Button>
-              </Box>
-
-              {/* hero art */}
-              <Box
-                sx={{
-                  position: 'absolute',
-                  bottom: 0,
-                  right: 0,
-                  width: { xs: 180, md: 240 },
-                  transform: 'translate(15%, 10%)',
-                }}
-              >
-                <Image
-                  src="/create-gift.png"  
-                  alt="giftbox create"
-                  width={240}
-                  height={240}
-                />
-              </Box>
-            </Box>
-          </Grid>
-
-          {/* CLAIM */}
-          <Grid item xs={12} md={6}>
-            <Box
-              sx={{
-                height: { xs: 340, md: 420 },
-                p: 5,
-                borderRadius: 10,
-                color: '#c4125e',
-                position: 'relative',
-                overflow: 'hidden',
-                backgroundImage:
-                  'linear-gradient(180deg,#ffd1dd 0%,#ffc3d4 45%,#ffb4c9 100%)',
-                display: 'flex',
-                flexDirection: 'column',
-              }}
-            >
-              <Box zIndex={2}>
-                <Typography
-                  variant="h4"
-                  fontWeight={800}
-                  mb={2}
-                  sx={{ lineHeight: 1.2 }}
-                >
-                  Claim a Gift Pack
-                </Typography>
-
-                <Typography mb={3} sx={{ maxWidth: 280 }}>
-                  Your gift is ready to claim. Just follow a few steps to
-                  unlock it.
-                </Typography>
-
-                <Button
-                  variant="contained"
-                  href="/gift/claim"
-                  endIcon={<LaunchIcon sx={{ fontSize: 16 }} />}
-                  sx={{
-                    bgcolor: '#0b39c6',
-                    color: '#fff',
-                    textTransform: 'none',
-                    fontWeight: 700,
-                    px: 4,
-                    '&:hover': { bgcolor: '#082f9f' },
-                    borderRadius: 8,
-                  }}
-                >
-                  Start Claiming
-                </Button>
-              </Box>
-
-              {/* hero art */}
-              <Box
-                sx={{
-                  position: 'absolute',
-                  bottom: 0,
-                  right: 0,
-                  width: { xs: 180, md: 240 },
-                  transform: 'translate(25%, 15%)',
-                }}
-              >
-                <Image
-                  src="/gift-claim.png"  
-                  alt="giftbox claim"
-                  width={240}
-                  height={240}
-                />
-              </Box>
-            </Box>
-          </Grid>
+    <Box sx={{ px: { xs: 2, lg: 6 }, py: { xs: 4, lg: 8 } }}>
+      <Container maxWidth="xl">
+        <Grid container spacing={{ xs: 4, lg: 6 }}>
+          {cards.map((c) => (
+            <Grid key={c.title} item xs={12} lg={6}>
+              <GiftCard {...c} />
+            </Grid>
+          ))}
         </Grid>
       </Container>
-    </Section>
+    </Box>
   );
 }
