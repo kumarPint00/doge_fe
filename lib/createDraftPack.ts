@@ -17,3 +17,5 @@ export async function sealPack(id: string, message: string) {
     body: JSON.stringify({ message, status: 'sealed' }),
   });
   return api(`/giftpacks/${id}`).then(r => r.json());  
+
+}

@@ -8,19 +8,19 @@
   "theme_color": "#2563eb",
   "icons": [
     {
-      "src": "/fevicon.png",
+      "src": "/fevicon.ico",
       "sizes": "32x32",
-      "type": "image/png"
+      "type": "image/x-icon"
     },
     {
-      "src": "/fevicon.png",
+      "src": "/fevicon.ico",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/x-icon"
     },
     {
-      "src": "/fevicon.png",
+      "src": "/fevicon.ico",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/x-icon"
     }
   ]
 }
