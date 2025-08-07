@@ -9,7 +9,7 @@ const demoNfts: GiftItem[] = [
   {
     id: 'demo-1',
     name: 'Basquiat Toy Face',
-    image: '/nft-demo/basquiat.png',
+    image: '/nft/basquiat.png',
     usd: 783.9,
     symbol: 'BASQ',
     type: 'NFT',
@@ -19,7 +19,7 @@ const demoNfts: GiftItem[] = [
   {
     id: 'demo-2',
     name: 'Warhol Toy Face',
-    image: '/nft-demo/warhol.png',
+    image: '/nft/warhol.png',
     usd: 420.9,
     symbol: 'WARH',
     type: 'NFT',
@@ -29,7 +29,7 @@ const demoNfts: GiftItem[] = [
   {
     id: 'demo-3',
     name: 'Dali Toy Face',
-    image: '/nft-demo/dali.png',
+    image: '/nft/dali.png',
     usd: 783.9,
     symbol: 'DALI', 
     type: 'NFT',
@@ -39,7 +39,7 @@ const demoNfts: GiftItem[] = [
   {
     id: 'demo-4',
     name: 'The Bakery',
-    image: '/nft-demo/bakery.png',
+    image: '/nft/bakery.png',
     usd: 783.9,
     symbol: 'BAKE',
     type: 'NFT',
@@ -49,7 +49,7 @@ const demoNfts: GiftItem[] = [
   {
     id: 'demo-5',
     name: 'Pirate Toy Face',
-    image: '/nft-demo/pirate.png',
+    image: '/nft/pirate.png',
     usd: 783.9,
     symbol: 'PIRATE',
     type: 'NFT',
@@ -59,7 +59,7 @@ const demoNfts: GiftItem[] = [
   {
     id: 'demo-6',
     name: 'Autobots Assemble',
-    image: '/nft-demo/autobots.png',
+    image: '/nft/autobots.png',
     symbol: 'AUTO',
     type: 'NFT',
     balance: 1,
@@ -69,7 +69,7 @@ const demoNfts: GiftItem[] = [
   {
     id: 'demo-7',
     name: 'Viking Toy Face',
-    image: '/nft-demo/viking.png',
+    image: '/nft/viking.png',
     symbol: 'VIKING',
     type: 'NFT',
     balance: 1,
@@ -79,7 +79,7 @@ const demoNfts: GiftItem[] = [
   {
     id: 'demo-8',
     name: 'Bowie Toy Face',
-    image: '/nft-demo/bowie.png',
+    image: '/nft/bowie.png',
     usd: 783.9,
     symbol: 'BOWIE',
     type: 'NFT',
