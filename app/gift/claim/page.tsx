@@ -85,7 +85,7 @@ export default function ClaimGiftPage() {
               width={420}
               height={420}
               priority
-              style={{ maxWidth: '100%', height: 'auto' }}
+              style={{ width: 'auto', maxWidth: '100%', height: 'auto' }}
             />
           </Grid>
         </Grid>

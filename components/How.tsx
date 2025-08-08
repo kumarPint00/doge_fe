@@ -98,6 +98,7 @@ export default function How() {
                         width={160}
                         height={160}
                         style={{
+                          width: 'auto',
                           maxWidth: '160px',
                           height: 'auto',
                         }}

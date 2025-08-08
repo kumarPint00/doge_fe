@@ -1,13 +1,11 @@
-const KEY   = process.env.NEXT_PUBLIC_ALCHEMY_KEY!;
-const CHAIN = 'ethereum';        
+const KEY = process.env.NEXT_PUBLIC_ALCHEMY_KEY || 'demo';
+const BASE = `https://eth-mainnet.g.alchemy.com/nft/v3/${KEY}/getNFTsForOwner`;
 
 export async function getWalletNfts(address: string) {
-  const url =
-    `https://${CHAIN}.g.alchemy.com/v2/${KEY}/getNFTs/?owner=${address}&pageSize=30`;
+  const params = new URLSearchParams({ owner: address, pageSize: '30', withMetadata: 'true' });
+  const url = `${BASE}?${params.toString()}`;
   const res = await fetch(url, { cache: 'no-store' });
-  console.log("🚀 ~ getWalletNfts ~ res:", res)
-  
-  if (!res.ok) throw new Error('NFT fetch');
+  if (!res.ok) throw new Error(`NFT fetch ${res.status}`);
   const json = await res.json();
-  return json.ownedNfts as any[];
+  return (json.ownedNfts || []) as any[];
 }

@@ -13,7 +13,7 @@ export default function Section({
     <Box
       component="section"
       sx={{
-        /* 🌅 default background wash - matches Hero */
+        /* Default background gradient shared by Hero and GiftCards */
         background:
           'radial-gradient(circle at 0% 0%, #f9dfb6 0%, rgba(249,223,182,0) 45%), #fff7fb',
         py: { xs: 6, md: 8 },

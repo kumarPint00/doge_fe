@@ -1,15 +1,19 @@
 'use client';
 import Image from 'next/image';
 import { Box, Button, Container, Grid, Typography } from '@mui/material';
+import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
+import Section from '@/components/Section';
+import { useWallet } from '@/context/WalletContext';
+import { useState } from 'react';
 
 type CardSpec = {
   title: string;
   blurb: string;
   href: string;
   btnLabel: string;
-  bg: string;         // gradient
-  text: string;       // heading colour
-  btn: string;        // button colour
+  bg: string;         
+  text: string;       
+  btn: string;        
   btnHover: string;
   img: string;
   imgW: { xs: number; md: number };
@@ -31,6 +35,24 @@ function GiftCard({
   imgH,
   cardH,
 }: CardSpec) {
+  const { address, connect } = useWallet();
+  const [connecting, setConnecting] = useState(false);
+
+  const handleClick = async () => {
+    if (!address) {
+      try {
+        setConnecting(true);
+        await connect();
+      } catch (error) {
+        console.error('Failed to connect wallet:', error);
+      } finally {
+        setConnecting(false);
+      }
+    } else {
+      
+      window.location.href = href;
+    }
+  };
   return (
     <Box
       sx={{
@@ -77,7 +99,8 @@ function GiftCard({
         </Typography>
 
         <Button
-          href={href}
+          onClick={handleClick}
+          disabled={connecting}
           sx={{
             px: 4,
             py: 1.4,
@@ -89,21 +112,16 @@ function GiftCard({
             textTransform: 'none',
             fontSize: '0.9rem',
             gap: 1,
+            '&:disabled': {
+              opacity: 0.7,
+              bgcolor: btn,
+            },
           }}
         >
-          {btnLabel}
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M17 8l4 4-4 4M3 12h18" />
-          </svg>
+          {connecting ? 'Connecting...' : (!address ? 'Connect Wallet' : btnLabel)}
+          {!connecting && (
+            <ArrowOutwardIcon sx={{ fontSize: 16 }} />
+          )}
         </Button>
       </Box>
 
@@ -113,8 +131,10 @@ function GiftCard({
           position: 'absolute',
           bottom: 0,
           right: 0,
-          width: imgW,
-          height: imgH,
+          width: '65%',
+          height: '70%',
+          minWidth: { xs: 180, md: 220 },
+          minHeight: { xs: 160, md: 200 },
         }}
       >
         <Image
@@ -141,8 +161,8 @@ export default function GiftCards() {
       btn: '#ff5f95',
       btnHover: '#ff4685',
       img: '/create-gift.png',
-      imgW: { xs: 240, md: 320 },
-      imgH: { xs: 220, md: 200 },
+    imgW: { xs: 180, md: 220 },
+      imgH: { xs: 160, md: 200 },
       cardH: { xs: 480, sm: 620 },
     },
     {
@@ -157,12 +177,12 @@ export default function GiftCards() {
       img: '/gift-claim.png',
       imgW: { xs: 180, md: 220 },
       imgH: { xs: 160, md: 200 },
-      cardH: { xs: 380, sm: 620 },
+      cardH: { xs: 480, sm: 620 },
     },
   ];
 
   return (
-    <Box sx={{ px: { xs: 2, lg: 6 }, py: { xs: 4, lg: 8 } }}>
+    <Section sx={{ px: { xs: 2, lg: 6 }, py: { xs: 4, lg: 8 } }}>
       <Container maxWidth="xl">
         <Grid container spacing={{ xs: 4, lg: 6 }}>
           {cards.map((c) => (
@@ -172,6 +192,6 @@ export default function GiftCards() {
           ))}
         </Grid>
       </Container>
-    </Box>
+    </Section>
   );
 }
