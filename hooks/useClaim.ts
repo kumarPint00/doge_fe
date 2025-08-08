@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient, Query } from '@tanstack/react-query';
 import { apiService, ClaimRequest, ClaimStatus } from '@/lib/api';
 
 export function useSubmitClaim() {
@@ -18,12 +18,13 @@ export function useClaimStatus(giftId?: string) {
     queryKey: ['claim-status', giftId],
     queryFn: () => apiService.getClaimStatus(giftId!),
     enabled: !!giftId,
-    refetchInterval: (data) => {
-      // Stop polling if claim is completed or failed
-      if (data?.status === 'completed' || data?.status === 'failed') {
+    refetchInterval: (query) => {
+      const data = (query as unknown as Query<ClaimStatus>).state.data as ClaimStatus | undefined;
+      const status = data?.status;
+      if (status === 'completed' || status === 'failed') {
         return false;
       }
-      return 5000; // Poll every 5 seconds for pending/processing
+      return 5000;
     },
   });
 }

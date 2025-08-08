@@ -22,45 +22,33 @@ import EscrowContext from '@/context/EscrowContext';
 import WalletWidget from './WalletWidget';
 import Image from 'next/image';
 
-/* ------------------------------------------------------------ */
-
 export default function Navbar() {
   const router = useRouter();
 
-  /* toast for wallet errors */
   const [err, setErr] = useState<string | null>(null);
   const [state, dispatch]  = useContext(EscrowContext)!;
 
-  /* ---------------------------------------------------------- */
-  /* navigation helper                                          */
-  /* ---------------------------------------------------------- */
   const handleNavigate = (href: string) => {
     if (href.startsWith('#')) {
-      // same-page anchor – smooth scroll
       const el = document.querySelector(href);
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     } else {
-      // page navigation
       router.push(href);
     }
   };
 
-  /* ---------------------------------------------------------- */
-  /* render                                                     */
-  /* ---------------------------------------------------------- */
   return (
     <>
-      {/* Sticky navbar container that stays at top */}
       <Box
         component="nav"
         sx={{
-          position: 'sticky', // Add sticky positioning
-          top: 0, // Pin to top of viewport
+          position: 'sticky',
+          top: 0,
           left: 0,
           right: 0,
           width: '100%',
           background: 'radial-gradient(circle at 0% 0%, #f9dfb6 0%, rgba(249,223,182,0) 45%), #fff7fb',
-          zIndex: 1200, // Higher z-index to stay above everything
+          zIndex: 1200,
           px: { xs: 2, lg: 6 },
           py: 2,
         }}
@@ -78,10 +66,8 @@ export default function Navbar() {
               alignItems: 'center',
               justifyContent: 'space-between',
               boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-              // Removed conflicting position: sticky from toolbar
             }}
           >
-            {/* logo */}
             <Box
               component="a"
               href="/"
@@ -95,7 +81,6 @@ export default function Navbar() {
               />
             </Box>
 
-            {/* Desktop nav pills - centered */}
             <Stack direction="row" spacing={1} sx={{ display: { xs: 'none', md: 'flex' } }}>
               {[
                 { label: 'How It Works', href: '/how' },
@@ -107,8 +92,8 @@ export default function Navbar() {
                   size="small"
                   onClick={() => handleNavigate(l.href)}
                   sx={{
-                    bgcolor: '#fbb6ce', // pink background like in image
-                    color: '#7c2d12', // dark red/brown text
+                    bgcolor: '#fbb6ce',
+                    color: '#7c2d12',
                     px: 3,
                     py: 1,
                     borderRadius: 999,
@@ -116,7 +101,7 @@ export default function Navbar() {
                     fontWeight: 600,
                     textTransform: 'none',
                     '&:hover': { 
-                      bgcolor: '#f9a8d4', // slightly darker pink on hover
+                      bgcolor: '#f9a8d4',
                     },
                   }}
                 >
@@ -125,12 +110,10 @@ export default function Navbar() {
               ))}
             </Stack>
 
-            {/* Desktop wallet widget */}
             <Box sx={{ display: { xs: 'none', md: 'block' } }}>
               <WalletWidget />
             </Box>
 
-            {/* Mobile menu button */}
             <Box sx={{ display: { xs: 'block', md: 'none' } }}>
               <Button
                 sx={{
@@ -148,7 +131,6 @@ export default function Navbar() {
         </Container>
       </Box>
       
-      {/* error toast */}
       <Snackbar open={!!err} autoHideDuration={3000} onClose={() => setErr(null)}>
         <Alert severity="error" variant="filled" onClose={() => setErr(null)}>
           {err}

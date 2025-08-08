@@ -10,7 +10,6 @@ import { sealPack } from '@/lib/escrow';
 import { useWallet } from '@/context/WalletContext';
 import useWalletNfts from '@/lib/hooks/useWalletNft';
 
-// Components
 import ReadyToSendCard from '@/components/ui/ReadyToSendCard';
 import AddMessageCard from '@/components/ui/AddMessageCard';
 import NftGallery from '@/components/ui/NftGallary';
@@ -18,7 +17,6 @@ import SealGiftCard from '@/components/ui/SealGiftCard';
 import TokenAddCard from '@/components/ui/TokenAddCard';
 import SelectedItemsCard from '@/components/ui/SelectedItemCard';
 
-// Types and Constants
 import { GiftItem } from '@/types/gift';
 import { Token } from '@/types/token';
 import { tokens } from '@/constants/tokens';
@@ -28,7 +26,6 @@ const CreatePack: React.FC = () => {
   const router = useRouter();
   const [state, dispatch] = useContext(EscrowContext)!;
 
-  // Local state
   const [msg, setMsg] = useState<string>(state.message);
   const [code, setCode] = useState<string>('');
   const [busy, setBusy] = useState<boolean>(false);
@@ -39,7 +36,6 @@ const CreatePack: React.FC = () => {
 const { tokens, loading: tokLoading }   = useWalletTokens(provider, address);
 
 
-  // Handlers
   const handleAddToken = (token: Token) => {
     dispatch({ type: 'add', item: { ...token, type: 'ERC20' } });
   };

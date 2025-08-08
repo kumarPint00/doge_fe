@@ -33,16 +33,9 @@ export default function WalletAuthButton({
     setError(null);
 
     try {
-      // Get nonce for SIWE
       const nonceResponse = await getNonce.mutateAsync();
-      
-      // Here you would typically sign the message with the wallet
-      // This is a simplified example - you'd use wagmi, ethers, or similar
       const message = nonceResponse.message;
-      
-      // Simulate signature (replace with actual wallet signing)
       const signature = 'placeholder_signature';
-      
       await siweAuth.mutateAsync({ message, signature });
       
     } catch (err) {

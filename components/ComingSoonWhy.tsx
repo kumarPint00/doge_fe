@@ -167,7 +167,7 @@ export default function ComingSoonWhy() {
               target="_blank"
               rel="noopener noreferrer"
               endIcon={<LaunchIcon fontSize="small" />}
-              sx={{ ...primaryBtn, bgcolor: '#007bff', '&:hover': { bgcolor: '#0061ff' } }}
+              sx={{ ...primaryBtn, bgcolor: '#007bff', color: 'white', '&:hover': { bgcolor: '#0061ff' } }}
             >
               Learn more about&nbsp;DogeGF
             </Button>

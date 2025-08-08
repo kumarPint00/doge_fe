@@ -10,7 +10,6 @@ import QueryProvider from '@/providers/QueryProvider';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
-// Load fonts with next/font for consistent theming
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',

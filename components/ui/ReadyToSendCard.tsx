@@ -27,6 +27,7 @@ export default function ReadyToSendCard({
 }: Props) {
   const firstToken = items.find((i) => i.type === 'ERC20');
   const firstNft = items.find((i) => i.type === 'NFT');
+  const totalUsd = items.reduce((s, i) => s + (i.usd || 0), 0);
 
   return (
     <Paper sx={{ p: { xs: 4, md: 6 }, borderRadius: 4, textAlign: 'center' }}>
@@ -38,7 +39,6 @@ export default function ReadyToSendCard({
         Item Added to Gift Pack
       </Typography>
 
-      {/* token + nft preview row */}
       <Stack
         direction="row"
         justifyContent="center"
@@ -46,9 +46,8 @@ export default function ReadyToSendCard({
         spacing={2}
         mb={5}
       >
-        {/* total USD placeholder */}
         <Typography variant="h5" fontWeight={800}>
-          ${firstToken?.amount ? (firstToken.amount * 1000).toFixed(0) : '—'}
+          ${totalUsd.toFixed(2)}
         </Typography>
 
         {firstToken && (
@@ -76,7 +75,6 @@ export default function ReadyToSendCard({
         )}
       </Stack>
 
-      {/* message */}
       <Typography fontWeight={700} mb={1}>
         Message
       </Typography>
@@ -94,7 +92,6 @@ export default function ReadyToSendCard({
         {message || '—'}
       </Typography>
 
-      {/* secret code */}
       <Stack direction="column" alignItems="center" spacing={4}>
         <Box>
           <Typography fontWeight={700} mb={1}>
@@ -117,7 +114,6 @@ export default function ReadyToSendCard({
           </Box>
         </Box>
 
-        {/* confirm */}
         <Button
           variant="contained"
           size="large"
@@ -136,7 +132,6 @@ export default function ReadyToSendCard({
           Confirm &amp; Lock Gift Pack
         </Button>
       </Stack>
-
 
       <Typography
         fontSize={12}
