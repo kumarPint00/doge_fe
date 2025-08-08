@@ -40,7 +40,19 @@ export default function useWalletData() {
       setEthBal(await getEthBalance(provider, address));
       const priceMap = await getUsdPrices(['ethereum', 'dogecoin']);
       setPrices({ eth: priceMap.ethereum.usd, doge: priceMap.dogecoin.usd });
-      setNfts(await getWalletNfts(address));
+      try {
+        const list = await getWalletNfts(address);
+        const mapped = list.map((n: any) => ({
+          // Preserve old shape expectations used elsewhere if any
+          contract: { address: n.contract?.address },
+          tokenId: n.tokenId || n.id?.tokenId,
+          media: [{ gateway: n.image?.cachedUrl || n.image?.originalUrl || n.metadata?.image || '' }],
+          title: n.name || n.title,
+        }));
+        setNfts(mapped);
+      } catch {
+        setNfts([]);
+      }
     })();
   }, [provider, address]);
 

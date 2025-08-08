@@ -9,6 +9,12 @@ import {
   Stack,
   Toolbar,
   Typography,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  IconButton,
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useContext, useState } from 'react';
@@ -24,6 +30,7 @@ import Image from 'next/image';
 
 export default function Navbar() {
   const router = useRouter();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const [err, setErr] = useState<string | null>(null);
   const [state, dispatch]  = useContext(EscrowContext)!;
@@ -35,7 +42,14 @@ export default function Navbar() {
     } else {
       router.push(href);
     }
+    setMobileMenuOpen(false); // Close mobile menu after navigation
   };
+
+  const menuItems = [
+    { label: 'How It Works', href: '/how' },
+    { label: 'Why DogeGF',   href: '/why' },
+    { label: 'Learn',        href: '/learn' },
+  ];
 
   return (
     <>
@@ -82,11 +96,7 @@ export default function Navbar() {
             </Box>
 
             <Stack direction="row" spacing={1} sx={{ display: { xs: 'none', md: 'flex' } }}>
-              {[
-                { label: 'How It Works', href: '/how' },
-                { label: 'Why DogeGF',   href: '/why' },
-                { label: 'Learn',        href: '/learn' },
-              ].map((l) => (
+              {menuItems.map((l) => (
                 <Button
                   key={l.label}
                   size="small"
@@ -115,7 +125,8 @@ export default function Navbar() {
             </Box>
 
             <Box sx={{ display: { xs: 'block', md: 'none' } }}>
-              <Button
+              <IconButton
+                onClick={() => setMobileMenuOpen(true)}
                 sx={{
                   minWidth: 'auto',
                   p: 1,
@@ -125,11 +136,62 @@ export default function Navbar() {
                 <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
-              </Button>
+              </IconButton>
             </Box>
           </Toolbar>
         </Container>
       </Box>
+      
+      {/* Mobile Menu Drawer */}
+      <Drawer
+        anchor="right"
+        open={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        sx={{
+          '& .MuiDrawer-paper': {
+            width: 280,
+            bgcolor: '#fff7fb',
+            background: 'radial-gradient(circle at 0% 0%, #f9dfb6 0%, rgba(249,223,182,0) 45%), #fff7fb',
+          },
+        }}
+      >
+        <Box sx={{ p: 3 }}>
+          {/* Wallet Widget */}
+          <Box sx={{ mb: 4 }}>
+            <WalletWidget />
+          </Box>
+
+          {/* Menu Items */}
+          <List>
+            {menuItems.map((item) => (
+              <ListItem key={item.label} disablePadding>
+                <ListItemButton
+                  onClick={() => handleNavigate(item.href)}
+                  sx={{
+                    borderRadius: 2,
+                    mb: 1,
+                    bgcolor: '#fbb6ce',
+                    color: '#7c2d12',
+                    '&:hover': {
+                      bgcolor: '#f9a8d4',
+                    },
+                  }}
+                >
+                  <ListItemText
+                    primary={item.label}
+                    sx={{
+                      '& .MuiListItemText-primary': {
+                        fontWeight: 600,
+                        fontSize: 16,
+                      },
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      </Drawer>
       
       <Snackbar open={!!err} autoHideDuration={3000} onClose={() => setErr(null)}>
         <Alert severity="error" variant="filled" onClose={() => setErr(null)}>
