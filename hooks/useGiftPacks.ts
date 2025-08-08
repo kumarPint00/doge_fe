@@ -6,6 +6,7 @@ import {
   UpdateGiftPackData, 
   AddItemToGiftPackData 
 } from '@/lib/api';
+import { useLocalGiftPacks } from './useLocalGiftPacks';
 
 export function useCreateGiftPack() {
   const queryClient = useQueryClient();
@@ -24,6 +25,35 @@ export function useGiftPack(id?: string) {
     queryFn: () => apiService.getGiftPack(id!),
     enabled: !!id,
     staleTime: 1 * 60 * 1000, // 1 minute
+  });
+}
+
+// Enhanced hook for gift pack by code with local verification
+export function useGiftPackByCode(code: string) {
+  const { getGiftPackByCode } = useLocalGiftPacks();
+
+  return useQuery({
+    queryKey: ['gift-pack-code', code],
+    queryFn: async () => {
+      // First try local verification
+      const localGift = getGiftPackByCode(code);
+      if (localGift) {
+        return {
+          ...localGift,
+          source: 'local' as const
+        };
+      }
+
+      // Fall back to API
+      const apiGift = await apiService.getGiftPackByCodeWithLocalFallback(code);
+      return {
+        ...apiGift,
+        source: 'api' as const
+      };
+    },
+    enabled: !!code,
+    retry: false,
+    staleTime: 0, // Always check for latest data
   });
 }
 
@@ -91,4 +121,13 @@ export function useUserClaimedGifts(address?: string) {
     enabled: !!address,
     staleTime: 2 * 60 * 1000, // 2 minutes
   });
+}
+
+// Enhanced hook for local verification
+export function useLocalGiftVerification() {
+  return {
+    verifyGiftPack: (code: string) => {
+      return apiService.verifyLocalGiftPack(code);
+    }
+  };
 }

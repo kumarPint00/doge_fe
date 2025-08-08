@@ -13,29 +13,51 @@ import {
   Stepper,
   Step,
   StepLabel,
+  Chip,
 } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { useSubmitClaim, useClaimStatus } from '@/hooks/useClaim';
-import { useGiftPack } from '@/hooks/useGiftPacks';
+import { useGiftPackByCode, useLocalGiftVerification } from '@/hooks/useGiftPacks';
+import { useLocalGiftPacks } from '@/hooks/useLocalGiftPacks';
 
 interface ClaimGiftFormProps {
   walletAddress?: string;
 }
 
 export default function ClaimGiftForm({ walletAddress }: ClaimGiftFormProps) {
-  const [giftId, setGiftId] = useState('');
+  const [giftCode, setGiftCode] = useState('');
   const [claimSubmitted, setClaimSubmitted] = useState(false);
+  const [localVerification, setLocalVerification] = useState<any>(null);
 
-  const { data: giftPack, isLoading: isLoadingGift } = useGiftPack(giftId);
-  const { data: claimStatus } = useClaimStatus(claimSubmitted ? giftId : undefined);
+  const { data: giftPack, isLoading: isLoadingGift } = useGiftPackByCode(giftCode);
+  const { data: claimStatus } = useClaimStatus(claimSubmitted ? giftCode : undefined);
+  const { verifyGiftPack } = useLocalGiftVerification();
+  const { updateGiftPackStatus } = useLocalGiftPacks();
   const submitClaim = useSubmitClaim();
 
+  // Verify gift pack locally when code changes
+  useEffect(() => {
+    if (giftCode && giftCode.length >= 8) {
+      const verification = verifyGiftPack(giftCode);
+      setLocalVerification(verification);
+    } else {
+      setLocalVerification(null);
+    }
+  }, [giftCode, verifyGiftPack]);
+
   const handleSubmitClaim = async () => {
-    if (!walletAddress || !giftId) return;
+    if (!walletAddress || !giftCode) return;
 
     try {
+      // If it's a local gift, update its status
+      if (localVerification?.isLocal && localVerification.giftPack) {
+        updateGiftPackStatus(localVerification.giftPack.id, 'claimed');
+      }
+
       await submitClaim.mutateAsync({
-        giftId,
+        giftId: giftCode,
         recipientAddress: walletAddress,
       });
       setClaimSubmitted(true);
@@ -52,7 +74,38 @@ export default function ClaimGiftForm({ walletAddress }: ClaimGiftFormProps) {
     return 0;
   };
 
-  const steps = ['Enter Gift ID', 'Claim Submitted', 'Processing', 'Completed'];
+  const steps = ['Enter Gift Code', 'Claim Submitted', 'Processing', 'Completed'];
+
+  const renderVerificationStatus = () => {
+    if (!localVerification) return null;
+
+    if (localVerification.isLocal) {
+      return (
+        <Alert 
+          severity={localVerification.verification === 'verified' ? 'success' : 'warning'}
+          icon={<LocalFireDepartmentIcon />}
+          sx={{ mb: 2 }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Typography variant="body2">
+              {localVerification.verification === 'verified' 
+                ? 'Gift verified locally - Created in this browser'
+                : 'Local gift found but may be invalid or expired'
+              }
+            </Typography>
+            <Chip 
+              label="Local Gift" 
+              size="small" 
+              color="primary" 
+              variant="outlined"
+            />
+          </Box>
+        </Alert>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <Container maxWidth="md">
@@ -67,33 +120,67 @@ export default function ClaimGiftForm({ walletAddress }: ClaimGiftFormProps) {
               <>
                 <TextField
                   fullWidth
-                  label="Gift Pack ID"
-                  value={giftId}
-                  onChange={(e) => setGiftId(e.target.value)}
-                  placeholder="Enter the gift pack ID..."
-                  sx={{ mb: 3 }}
+                  label="Gift Code"
+                  value={giftCode}
+                  onChange={(e) => setGiftCode(e.target.value)}
+                  placeholder="Enter the gift code..."
+                  sx={{ mb: 2 }}
+                  helperText="Enter the gift code shared with you"
                 />
+
+                {renderVerificationStatus()}
 
                 {giftPack && (
                   <Box sx={{ mb: 3 }}>
-                    <Typography variant="h6">Gift Pack Preview</Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                      <Typography variant="h6">Gift Pack Preview</Typography>
+                      {(giftPack as any).source === 'local' && (
+                        <Chip 
+                          label="Local" 
+                          size="small" 
+                          color="primary" 
+                          icon={<VerifiedIcon />}
+                        />
+                      )}
+                    </Box>
+                    <Typography variant="body2" color="text.secondary" gutterBottom>
                       {giftPack.title || 'Untitled Gift Pack'}
                     </Typography>
-                    <Typography variant="body2">
-                      Items: {giftPack.items.length}
+                    <Typography variant="body2" gutterBottom>
+                      Items: {giftPack.items?.length || 0}
                     </Typography>
+                    {giftPack.description && (
+                      <Typography variant="body2" color="text.secondary">
+                        {giftPack.description}
+                      </Typography>
+                    )}
                   </Box>
                 )}
 
                 <Button
                   variant="contained"
                   onClick={handleSubmitClaim}
-                  disabled={!giftId || !walletAddress || submitClaim.isPending || isLoadingGift}
+                  disabled={
+                    !giftCode || 
+                    !walletAddress || 
+                    submitClaim.isPending || 
+                    isLoadingGift ||
+                    (localVerification?.isLocal && localVerification.verification !== 'verified')
+                  }
                   startIcon={submitClaim.isPending ? <CircularProgress size={20} /> : null}
+                  fullWidth
                 >
-                  Claim Gift Pack
+                  {localVerification?.isLocal 
+                    ? 'Claim Local Gift Pack' 
+                    : 'Claim Gift Pack'
+                  }
                 </Button>
+
+                {localVerification?.isLocal && localVerification.verification !== 'verified' && (
+                  <Alert severity="warning" sx={{ mt: 2 }}>
+                    This local gift pack appears to be invalid or expired and cannot be claimed.
+                  </Alert>
+                )}
               </>
             ) : (
               <Box>
@@ -112,7 +199,7 @@ export default function ClaimGiftForm({ walletAddress }: ClaimGiftFormProps) {
                     </Typography>
                     
                     {claimStatus.transactionHash && (
-                      <Typography variant="body2">
+                      <Typography variant="body2" gutterBottom>
                         Transaction: {claimStatus.transactionHash}
                       </Typography>
                     )}

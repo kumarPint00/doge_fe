@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+import { localStorageService, LocalGiftPack } from './localStorage';
 
 let JWT = '';
 
@@ -240,10 +241,34 @@ class ApiService {
    * POST /giftpacks - Create a new draft gift pack
    */
   async createGiftPack(data: CreateGiftPackData): Promise<GiftPack> {
-    return this.request('/giftpacks', {
+    const result = await this.request<GiftPack>('/giftpacks', {
       method: 'POST',
       body: JSON.stringify(data),
     });
+
+    // Save to localStorage for local verification
+    const localGiftPack: LocalGiftPack = {
+      id: result.id,
+      code: result.claimCode || this.generateLocalCode(),
+      title: data.title,
+      description: data.description,
+      items: result.items.map(item => ({
+        id: item.id,
+        type: item.type,
+        contractAddress: item.contractAddress,
+        tokenId: item.tokenId,
+        amount: item.amount,
+        symbol: item.symbol,
+        name: item.name,
+      })),
+      createdBy: result.createdBy,
+      createdAt: result.createdAt,
+      status: result.status,
+      isLocalGift: true,
+    };
+
+    localStorageService.saveGiftPack(localGiftPack);
+    return result;
   }
 
   /**
@@ -324,6 +349,89 @@ class ApiService {
    */
   async getUserClaimedGifts(address: string): Promise<GiftPack[]> {
     return this.request(`/giftpacks?claimedBy=${encodeURIComponent(address)}`);
+  }
+
+  /**
+   * Enhanced gift pack retrieval that checks localStorage first
+   */
+  async getGiftPackWithLocalFallback(id: string): Promise<GiftPack | LocalGiftPack> {
+    // First check localStorage
+    const localGift = localStorageService.getGiftPack(id);
+    if (localGift) {
+      return localGift;
+    }
+
+    // Fall back to API
+    return this.getGiftPack(id);
+  }
+
+  /**
+   * Enhanced gift pack retrieval by code with local verification
+   */
+  async getGiftPackByCodeWithLocalFallback(code: string): Promise<GiftPack | LocalGiftPack> {
+    // First check localStorage for local verification
+    const localGift = localStorageService.getGiftPackByCode(code);
+    if (localGift) {
+      return localGift;
+    }
+
+    // Fall back to API
+    return this.getGiftPackByCode(code);
+  }
+
+  /**
+   * Verify if a gift pack was created locally
+   */
+  verifyLocalGiftPack(code: string): {
+    isLocal: boolean;
+    giftPack?: LocalGiftPack;
+    verification: 'verified' | 'not_found' | 'invalid';
+  } {
+    const localGift = localStorageService.getGiftPackByCode(code);
+    
+    if (!localGift) {
+      return {
+        isLocal: false,
+        verification: 'not_found'
+      };
+    }
+
+    // Additional verification logic
+    const isValid = this.validateLocalGiftPack(localGift);
+    
+    return {
+      isLocal: true,
+      giftPack: localGift,
+      verification: isValid ? 'verified' : 'invalid'
+    };
+  }
+
+  private validateLocalGiftPack(giftPack: LocalGiftPack): boolean {
+    // Validate gift pack structure and data
+    if (!giftPack.id || !giftPack.code || !giftPack.createdAt) {
+      return false;
+    }
+
+    // Check if gift pack is not expired (example: 30 days)
+    const createdDate = new Date(giftPack.createdAt);
+    const expiryDate = new Date(createdDate.getTime() + 30 * 24 * 60 * 60 * 1000);
+    
+    if (new Date() > expiryDate) {
+      return false;
+    }
+
+    // Check if gift pack has items
+    if (!giftPack.items || giftPack.items.length === 0) {
+      return false;
+    }
+
+    return true;
+  }
+
+  private generateLocalCode(): string {
+    // Generate a unique code for local gift packs
+    return Math.random().toString(36).substring(2, 15) + 
+           Math.random().toString(36).substring(2, 15);
   }
 }
 

@@ -1,115 +1,209 @@
 'use client';
+
 import {
   Box,
   Container,
   Grid,
   Typography,
-  Link,
+  Link as MuiLink,
   IconButton,
-  styled,
+  Divider,
+  Stack,
 } from '@mui/material';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/X';
+import Link from 'next/link';
+import TwitterIcon from '@mui/icons-material/Twitter';
 import TelegramIcon from '@mui/icons-material/Telegram';
-import InstagramIcon from '@mui/icons-material/Instagram';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import Image from 'next/image';
 
-/* navy pill-square icon wrapper */
-const SocialBtn = styled(IconButton)(({ theme }) => ({
-  background: '#0D1B3E',
-  color: '#fff',
-  borderRadius: 8,
-  width: 44,
-  height: 44,
-  '&:hover': { background: theme.palette.primary.dark },
-}));
+const footerSections = [
+  {
+    title: 'Product',
+    links: [
+      { text: 'How it Works', href: '/how-it-works' },
+      { text: 'Features', href: '/features' },
+      { text: 'Pricing', href: '/pricing' },
+      { text: 'Security', href: '/security' },
+    ],
+  },
+  {
+    title: 'Resources',
+    links: [
+      { text: 'Documentation', href: '/docs' },
+      { text: 'API Reference', href: '/api-docs' },
+      { text: 'Tutorials', href: '/tutorials' },
+      { text: 'FAQ', href: '/faq' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { text: 'About Us', href: '/about' },
+      { text: 'Blog', href: '/blog' },
+      { text: 'Careers', href: '/careers' },
+      { text: 'Contact', href: '/contact' },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
+      { text: 'Privacy Policy', href: '/privacy' },
+      { text: 'Terms of Service', href: '/terms' },
+      { text: 'Cookie Policy', href: '/cookies' },
+      { text: 'Compliance', href: '/compliance' },
+    ],
+  },
+];
+
+const socialLinks = [
+  { icon: TwitterIcon, href: 'https://twitter.com/dogegifty', label: 'Twitter' },
+  { icon: TelegramIcon, href: 'https://t.me/dogegifty', label: 'Telegram' },
+  { icon: GitHubIcon, href: 'https://github.com/dogegifty', label: 'GitHub' },
+  // { icon: DiscordIcon, href: 'https://discord.gg/dogegifty', label: 'Discord' },
+];
 
 export default function Footer() {
   return (
     <Box
       component="footer"
       sx={{
-        pt: 6,
-        pb: 2,
-        borderTop: '1px solid rgba(0,0,0,.05)',
-        backgroundColor: '#fff',
+        bgcolor: 'background.paper',
+        borderTop: '1px solid',
+        borderColor: 'divider',
+        py: { xs: 6, md: 8 },
+        mt: 'auto',
       }}
     >
-      <Container maxWidth="xl">
-        <Grid container spacing={4} alignItems="flex-start">
-          {/* logo */}
-          <Grid item xs={12} md={3}>
-            <Box display="flex" alignItems="center" gap={1}>
-              <Box
-                component="img"
-                src="/logo.svg"
-                alt="logo"
-                sx={{ width: 148, height: 148 }}
-              />
-             
+      <Container maxWidth="lg">
+        <Grid container spacing={4}>
+          {/* Brand Section */}
+          <Grid item xs={12} md={4}>
+            <Box sx={{ mb: 3 }}>
+               <Image
+              src="/logo.svg"
+              alt="DogeGiFty Logo"
+              width={150}
+              height={50}
+              priority
+              style={{ maxWidth: '100%', height: 'auto' }}
+            />
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 3, maxWidth: 280 }}>
+                Send crypto gifts with kindness. The easiest way to share digital assets with friends and family.
+              </Typography>
+              
+              {/* Social Links */}
+              <Stack direction="row" spacing={1}>
+                {socialLinks.map((social) => (
+                  <IconButton
+                    key={social.label}
+                    component={MuiLink}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      color: 'text.secondary',
+                      '&:hover': {
+                        color: 'primary.main',
+                        bgcolor: 'action.hover',
+                      },
+                    }}
+                    aria-label={social.label}
+                  >
+                    <social.icon fontSize="small" />
+                  </IconButton>
+                ))}
+              </Stack>
             </Box>
           </Grid>
 
-          {/* quick links */}
-          <Grid item xs={6} md={3}>
-            <Typography fontWeight={700} mb={1} sx={{ display: 'flex', gap: 1 }}>
-              <Box component="span" sx={{ fontSize: 24 }}>🖋️</Box> Quick Links
-            </Typography>
-            <ul style={{ paddingLeft: 18, margin: 0, listStyle: 'disc' }}>
-              <li><Link href="#" underline="hover" color="inherit">About DogeGiFty</Link></li>
-              <li><Link href="#" underline="hover" color="inherit">How It Works</Link></li>
-              <li><Link href="#" underline="hover" color="inherit">DogeGF Website</Link></li>
-            </ul>
-          </Grid>
-
-          {/* support */}
-          <Grid item xs={6} md={3}>
-            <Typography fontWeight={700} mb={1} sx={{ display: 'flex', gap: 1 }}>
-              <Box component="span" sx={{ fontSize: 24 }}>📞</Box> Support
-            </Typography>
-            <ul style={{ paddingLeft: 18, margin: 0, listStyle: 'disc' }}>
-              <li><Link href="#" underline="hover" color="inherit">Contact Us</Link></li>
-              <li><Link href="#" underline="hover" color="inherit">Terms &amp; Privacy</Link></li>
-            </ul>
-          </Grid>
-
-          {/* socials */}
-          <Grid item xs={12} md={3}>
-            <Typography fontWeight={700} mb={1} sx={{ display: 'flex', gap: 1 }}>
-              <Box component="span" sx={{ fontSize: 24, color: '#f5b700' }}>🤘</Box> Stay Connected
-            </Typography>
-            <Box display="flex" gap={1}>
-              <SocialBtn aria-label="facebook">
-                <FacebookIcon />
-              </SocialBtn>
-              <SocialBtn aria-label="x">
-                <TwitterIcon fontSize="small" />
-              </SocialBtn>
-              <SocialBtn aria-label="telegram">
-                <TelegramIcon />
-              </SocialBtn>
-              <SocialBtn aria-label="instagram">
-                <InstagramIcon />
-              </SocialBtn>
-            </Box>
+          {/* Footer Links */}
+          <Grid item xs={12} md={8}>
+            <Grid container spacing={4}>
+              {footerSections.map((section) => (
+                <Grid item xs={6} sm={3} key={section.title}>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{
+                      fontWeight: 700,
+                      mb: 2,
+                      color: 'text.primary',
+                    }}
+                  >
+                    {section.title}
+                  </Typography>
+                  <Stack spacing={1.5}>
+                    {section.links.map((link) => (
+                      <MuiLink
+                        key={link.text}
+                        component={Link}
+                        href={link.href}
+                        sx={{
+                          color: 'text.secondary',
+                          textDecoration: 'none',
+                          fontSize: '0.875rem',
+                          '&:hover': {
+                            color: 'primary.main',
+                            textDecoration: 'underline',
+                          },
+                        }}
+                      >
+                        {link.text}
+                      </MuiLink>
+                    ))}
+                  </Stack>
+                </Grid>
+              ))}
+            </Grid>
           </Grid>
         </Grid>
 
-        {/* divider line */}
-        <Box
-          my={4}
-          sx={{ height: 1, bgcolor: 'rgba(0,0,0,.06)' }}
-        />
+        <Divider sx={{ my: 4 }} />
 
-        {/* copyright */}
-        <Typography
-          textAlign="center"
-          fontSize={14}
-          color="text.secondary"
+        {/* Bottom Section */}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            justifyContent: 'space-between',
+            alignItems: { xs: 'flex-start', sm: 'center' },
+            gap: 2,
+          }}
         >
-          2025 [DogeGF]. All rights reserved. Built with&nbsp;
-          <Box component="span" sx={{ color: 'secondary.main' }}>❤️</Box>&nbsp;for the
-          future of gifting.
-        </Typography>
+          <Typography variant="body2" color="text.secondary">
+            © {new Date().getFullYear()} DogeGiFty. All rights reserved.
+          </Typography>
+          
+          <Stack direction="row" spacing={3}>
+            <MuiLink
+              component={Link}
+              href="/status"
+              sx={{
+                color: 'text.secondary',
+                textDecoration: 'none',
+                fontSize: '0.875rem',
+                '&:hover': {
+                  color: 'primary.main',
+                },
+              }}
+            >
+              Status
+            </MuiLink>
+            <MuiLink
+              component={Link}
+              href="/help"
+              sx={{
+                color: 'text.secondary',
+                textDecoration: 'none',
+                fontSize: '0.875rem',
+                '&:hover': {
+                  color: 'primary.main',
+                },
+              }}
+            >
+              Help
+            </MuiLink>
+          </Stack>
+        </Box>
       </Container>
     </Box>
   );
