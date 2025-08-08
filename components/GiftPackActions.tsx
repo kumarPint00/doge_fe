@@ -8,13 +8,22 @@ import {
   Grid,
   Card,
   CardContent,
-  Stack,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { useRouter } from 'next/navigation';
 
 export default function GiftPackActions() {
   const theme = useTheme();
+  const router = useRouter();
+
+  const handleCreateGift = () => {
+    router.push('/create');
+  };
+
+  const handleClaimGift = () => {
+    router.push('/claim');
+  };
 
   return (
     <Box
@@ -39,7 +48,13 @@ export default function GiftPackActions() {
                 minHeight: 400,
                 display: 'flex',
                 flexDirection: 'column',
+                cursor: 'pointer',
+                transition: 'transform 0.2s ease',
+                '&:hover': {
+                  transform: 'translateY(-4px)',
+                },
               }}
+              onClick={handleCreateGift}
             >
               <CardContent
                 sx={{
@@ -100,7 +115,21 @@ export default function GiftPackActions() {
                   </Button>
                 </Box>
 
-                    
+                {/* Decorative Gift Box */}
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    bottom: -20,
+                    right: -20,
+                    width: 180,
+                    height: 180,
+                    background: 'linear-gradient(45deg, #f472b6 0%, #ec4899 100%)',
+                    borderRadius: 2,
+                    transform: 'rotate(15deg)',
+                    opacity: 0.8,
+                    zIndex: 1,
+                  }}
+                />
               </CardContent>
             </Card>
           </Grid>
@@ -118,7 +147,13 @@ export default function GiftPackActions() {
                 minHeight: 400,
                 display: 'flex',
                 flexDirection: 'column',
+                cursor: 'pointer',
+                transition: 'transform 0.2s ease',
+                '&:hover': {
+                  transform: 'translateY(-4px)',
+                },
               }}
+              onClick={handleClaimGift}
             >
               <CardContent
                 sx={{
@@ -214,32 +249,6 @@ export default function GiftPackActions() {
                     },
                   }}
                 />
-
-                {/* Decorative Stars */}
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    top: 30,
-                    right: 80,
-                    fontSize: '24px',
-                    color: '#fbbf24',
-                    zIndex: 1,
-                  }}
-                >
-                  ⭐
-                </Box>
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    top: 80,
-                    right: 140,
-                    fontSize: '16px',
-                    color: '#fbbf24',
-                    zIndex: 1,
-                  }}
-                >
-                  ✨
-                </Box>
               </CardContent>
             </Card>
           </Grid>

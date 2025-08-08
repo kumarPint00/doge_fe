@@ -84,12 +84,17 @@ export default function TokenPickerV2({
           return (
             <MenuItem
               key={t.id}
+              onClick={() => {
+                added ? onRemove(t.id) : onAdd(t);
+                close();
+              }}
               sx={{
                 py: 1.5,
                 px: 2,
                 display: 'flex',
                 alignItems: 'center',
                 columnGap: 1.5,
+                cursor: 'pointer',
               }}
             >
               {/* avatar */}
@@ -118,7 +123,8 @@ export default function TokenPickerV2({
               <Button
                 size="small"
                 variant="contained"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation(); // prevent double toggle
                   added ? onRemove(t.id) : onAdd(t);
                   close();
                 }}
@@ -128,9 +134,7 @@ export default function TokenPickerV2({
                   textTransform: 'none',
                   fontWeight: 700,
                   borderRadius: 2,
-                  '&:hover': {
-                    bgcolor: added ? 'error.dark' : '#0068ff',
-                  },
+                  '&:hover': { bgcolor: added ? 'error.dark' : '#0068ff' },
                 }}
               >
                 {added ? 'Remove' : 'Add'}

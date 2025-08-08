@@ -6,11 +6,10 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@/lib/theme';
 import { EscrowProvider } from '@/context/EscrowContext';
 import { WalletProvider } from '@/context/WalletContext';
+import QueryProvider from '@/providers/QueryProvider';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Box } from '@mui/material';
 
-// Load fonts with next/font for consistent theming
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
@@ -35,13 +34,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <EscrowProvider>
-              <WalletProvider>
-                <Navbar />
+            <QueryProvider>
+              <EscrowProvider>
+                <WalletProvider>
+                  <Navbar />
                   {children}
-                <Footer />
-              </WalletProvider>
-            </EscrowProvider>
+                  <Footer />
+                </WalletProvider>
+              </EscrowProvider>
+            </QueryProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
