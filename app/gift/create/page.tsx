@@ -19,7 +19,6 @@ import SelectedItemsCard from '@/components/ui/SelectedItemCard';
 
 import { GiftItem } from '@/types/gift';
 import { Token } from '@/types/token';
-import { tokens } from '@/constants/tokens';
 import useWalletTokens from '@/lib/hooks/useWalletToken';
 
 const CreatePack: React.FC = () => {
@@ -33,11 +32,10 @@ const CreatePack: React.FC = () => {
 
   const { provider, address }             = useWallet();
   const { nfts, loading: nftsLoading } = useWalletNfts(address);
-const { tokens, loading: tokLoading }   = useWalletTokens(provider, address);
+  const { tokens, loading: tokLoading }   = useWalletTokens(provider, address);
 
-
-  const handleAddToken = (token: Token) => {
-    dispatch({ type: 'add', item: { ...token, type: 'ERC20' } });
+  const handleAddToken = (token: Token & { amount: number }) => {
+    dispatch({ type: 'add', item: { ...token, type: 'ERC20', amount: token.amount } });
   };
 
   const handleRemoveToken = (id: string) => {

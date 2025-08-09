@@ -3,6 +3,9 @@ import { Box, Grid, Paper, Typography, Button } from '@mui/material';
 import Image from 'next/image';
 import { GiftItem } from '@/types/gift';
 import NftCard from './NFTCard';
+import { CircularProgress } from '@mui/material';
+import { useWallet } from '@/context/WalletContext';
+import useWalletNfts from '@/lib/hooks/useWalletNft';
 
 /* —— 8 pretty demo NFTs —————————————————————————— */
 const demoNfts: GiftItem[] = [
@@ -99,7 +102,12 @@ export default function NftGallery({
   selectedIds,
   onToggle,
 }: NftGalleryProps) {
-  const gallery = nfts.length ? nfts : demoNfts;
+  const { address, connect } = useWallet();
+  const { nfts: walletNfts, loading } = useWalletNfts(address);
+
+  const gallery: GiftItem[] = address
+    ? (walletNfts.length ? walletNfts : [])
+    : (nfts.length ? nfts : demoNfts);
 
   return (
     <Paper sx={{ p: 4, borderRadius: 4 }}>
@@ -107,18 +115,33 @@ export default function NftGallery({
         Select NFT
       </Typography>
 
-      <Grid container spacing={3}>
-  {gallery.map((n) => (
-    <Grid item xs={6} md={3} key={n.id}>
-      <NftCard
-        nft={n}
-        added={selectedIds.includes(n.id)}
-        onToggle={onToggle}
-      />
-    </Grid>
-  ))}
-</Grid>
-
+      {/* States: not connected / loading / empty */}
+      {!address && !nfts.length ? (
+        <Box textAlign="center">
+          <Typography color="text.secondary" mb={2}>
+            Connect your wallet to view your NFTs.
+          </Typography>
+          <Button variant="contained" onClick={connect} sx={{ textTransform: 'none', fontWeight: 700 }}>
+            Connect Wallet
+          </Button>
+        </Box>
+      ) : address && loading ? (
+        <Box textAlign="center"><CircularProgress size={24} /></Box>
+      ) : address && !loading && walletNfts.length === 0 ? (
+        <Typography color="text.secondary">No NFTs found in your wallet.</Typography>
+      ) : (
+        <Grid container spacing={3}>
+          {gallery.map((n) => (
+            <Grid item xs={6} md={3} key={n.id}>
+              <NftCard
+                nft={n}
+                added={selectedIds.includes(n.id)}
+                onToggle={onToggle}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      )}
     </Paper>
   );
 }
